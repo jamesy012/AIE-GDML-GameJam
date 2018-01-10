@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class CoreGameManager : MonoBehaviour {
@@ -14,7 +15,11 @@ public class CoreGameManager : MonoBehaviour {
 		
 	}
 
-  
+    public void LoadLevel(string a_level)
+    {
+        SceneManager.LoadScene(a_level);
+    }
+
 
 
 }
