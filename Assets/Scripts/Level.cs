@@ -62,6 +62,7 @@ public class Level : MonoBehaviour {
     public void ResetLevel()
     {
         m_player.transform.position = m_respawnPoint.transform.position;
+        m_player.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
         Physics.gravity = new Vector3(0, -9.81f, 0);
         m_uiManager.SetupKeys(m_numberOfKeys);
     }

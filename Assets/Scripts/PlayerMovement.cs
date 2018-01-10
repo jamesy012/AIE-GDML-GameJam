@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour {
     /// movement speed of the player
     /// </summary>
     public float m_moveSpeed = 100;
+    public float m_flipSpeed;
+    public int m_acceleration;
+    public int m_decelleration;
 
     /// <summary>
     /// flag to check if the player is grounded
@@ -31,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
     public float m_currentTime;
     public Transform m_graphics;
     public bool m_flipped;
+    public float m_maxSpeed;
 
     // Use this for initialization
     void Start() {
@@ -84,41 +88,64 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //if the player is not grounded dont run the movement/gravity flip code
-        if (!m_isGrounded) {
-            return;
-        }
+        
+        //if (!m_isGrounded) {
+        //    return;
+        //}
 
         //get key inputs
         bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
-        bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+        if(m_isGrounded)
+        {
+            bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+            //go gravity flip
+            if (keyGravityFlip)
+            {
+                FlipGravity();
+            }
+        }
+   
 
         //calc direction from key inputs
-        int movement = 0;
-        if (keyLeft) {
-            movement += -1;
-        }
-        if (keyRight) {
-            movement += 1;
-        }
-
-        //do movement
-        SideMovement(movement);
-
-        //go gravity flip
-        if (keyGravityFlip) {
-            FlipGravity();
-        }
-
        
-         m_animator.SetInteger("Movement", movement);
+        if (keyLeft && (m_moveSpeed > -m_maxSpeed)) {
+          
+            if (m_moveSpeed > 0)
+                m_moveSpeed -= m_acceleration * 4 * Time.deltaTime;
+            else if (m_moveSpeed <= 0)
+                m_moveSpeed -= m_acceleration * Time.deltaTime;
+        }
+        else if (keyRight )
+        { 
+            if (m_moveSpeed < 0)
+                m_moveSpeed += m_acceleration * 4 * Time.deltaTime;
+            else if(m_moveSpeed >= 0)
+                m_moveSpeed += m_acceleration * Time.deltaTime;
+        }
+        else
+        {
+            if (m_moveSpeed > m_decelleration * Time.deltaTime)
+                m_moveSpeed -= m_decelleration * Time.deltaTime;
+            else if (m_moveSpeed < -m_decelleration * Time.deltaTime)
+                m_moveSpeed = m_moveSpeed + m_decelleration * Time.deltaTime;
+            else
+                m_moveSpeed = 0;
+        }
+
+        m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
+        //do movement
+        SideMovement();
+       
+       
         
 
     }
 
-    private void SideMovement(int a_movementDirection) {
+    private void SideMovement() {
+
         Vector3 velocity = m_rigidbody.velocity;
-        velocity.x = a_movementDirection * m_moveSpeed * Time.deltaTime;
+        velocity.x = m_moveSpeed * 100 * Time.deltaTime;
         m_rigidbody.velocity = velocity;
     }
 
@@ -126,7 +153,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 gravity = Physics.gravity;
         gravity.y *= -1;
         Physics.gravity = gravity;
-        StartCoroutine(FlipPLayer(0.3f));
+        StartCoroutine(FlipPLayer(m_flipSpeed));
         m_flipped = !m_flipped;
         
     }
