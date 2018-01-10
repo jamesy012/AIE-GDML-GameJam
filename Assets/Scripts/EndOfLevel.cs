@@ -18,6 +18,8 @@ public class EndOfLevel : MonoBehaviour
         if (other == playerCollider)
         {
             GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel = newLevel;
+            newLevel.GetComponent<Level>().StartLevel();
         }
+        
     }
 }

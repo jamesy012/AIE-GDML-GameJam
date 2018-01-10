@@ -22,7 +22,7 @@ public class Level : MonoBehaviour {
 		
 	}
 
-    void StartLevel()
+    public void StartLevel()
     {
         m_uiManager.SetupKeys(m_numberOfKeys);
     }
