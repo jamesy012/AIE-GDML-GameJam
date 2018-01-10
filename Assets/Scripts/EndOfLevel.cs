@@ -6,7 +6,7 @@ public class EndOfLevel : MonoBehaviour
 {
     Collider playerCollider;
     public bool m_active;
-    public GameObject newLevel;
+    public Level newLevel;
 
     private void Start()
     {
@@ -19,6 +19,10 @@ public class EndOfLevel : MonoBehaviour
         {
             if (other == playerCollider)
             {
+                if (GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel != null)
+                {
+                    GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel.m_door.m_animtor.SetTrigger("Close");
+                }
                 GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel = newLevel;
                 newLevel.GetComponent<Level>().StartLevel();
                 m_active = false;
