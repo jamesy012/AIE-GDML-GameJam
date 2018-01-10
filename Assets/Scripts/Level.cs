@@ -79,6 +79,7 @@ public class Level : MonoBehaviour {
         m_movesDone = 0;
         m_player.GetComponent<PlayerMovement>().m_graphics.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
         m_player.GetComponent<PlayerMovement>().m_moveSpeed = 0;
+        m_player.GetComponent<PlayerMovement>().StopAllCoroutines();
     }
 
     IEnumerator PanCamera(float time)
