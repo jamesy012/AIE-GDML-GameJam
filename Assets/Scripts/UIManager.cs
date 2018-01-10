@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour {
     public Text m_movesLeftText;
     public int m_numberOfKeysActive;
 
+    public GameObject m_canvas;
+
     // Use this for initialization
     void Start () {
 
@@ -61,6 +63,8 @@ public class UIManager : MonoBehaviour {
     {
         m_movesLeftText.text = a_moves.ToString();
         m_movesBar.fillAmount = (float)a_moves / m_maxMoves;
+
+        m_canvas.SetActive(true);
       
     }
     
