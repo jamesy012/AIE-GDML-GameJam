@@ -31,6 +31,14 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     public bool m_isGrounded = false;
 
+
+    /// <summary>
+    /// Sound effect storage
+    /// </summary>
+    public AudioClip m_gravitySwitchAudio;
+
+
+
     private LayerMask m_playerLayerMask;
     public float m_currentTime;
     public Transform m_graphics;
@@ -203,6 +211,7 @@ public class PlayerMovement : MonoBehaviour {
 
     IEnumerator FlipPLayer(float time)
     {
+        SoundManager.PlaySFX(m_gravitySwitchAudio);
         m_currentTime = 0;
      
         while (m_currentTime < time)
