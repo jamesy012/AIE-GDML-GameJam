@@ -145,7 +145,14 @@ public class PlayerMovement : MonoBehaviour {
         m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
         //do movement
         SideMovement();
-      
+        if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
+        {
+            StartCoroutine(FlipPLayer(m_flipSpeed));
+        }
+        if (m_graphics.transform.rotation == m_defaultPos.rotation && m_flipped)
+        {
+            StartCoroutine(FlipPLayer(m_flipSpeed));
+        }
 
     }
 
@@ -162,15 +169,15 @@ public class PlayerMovement : MonoBehaviour {
         Physics.gravity = gravity;
         StartCoroutine(FlipPLayer(m_flipSpeed));
         m_flipped = !m_flipped;
-        
+
     }
 
     IEnumerator FlipPLayer(float time)
     {
         m_currentTime = 0;
-        while(m_currentTime < time)
+     
+        while (m_currentTime < time)
         {
-            
             m_currentTime += Time.deltaTime;
             if(m_flipped)
             {
