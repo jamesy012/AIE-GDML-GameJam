@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 114124038189208342}
   - component: {fileID: 136623126630296284}
   - component: {fileID: 95685232044974038}
+  - component: {fileID: 65510937900025422}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -216,6 +217,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!65 &65510937900025422
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315124761388322}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.28, z: 1}
+  m_Center: {x: 0, y: 1.03, z: 0}
 --- !u!95 &95685232044974038
 Animator:
   serializedVersion: 3
@@ -258,11 +271,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_defaultPos: {fileID: 4092093876556932}
   m_flippedPos: {fileID: 4221146318770698}
-  m_moveSpeed: 1000
+  m_moveSpeed: 0
+  m_flipSpeed: 1
+  m_acceleration: 8
+  m_decelleration: 16
   m_isGrounded: 0
   m_currentTime: 0
   m_graphics: {fileID: 4569640245815492}
   m_flipped: 0
+  m_maxSpeed: 8
 --- !u!136 &136623126630296284
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -273,6 +290,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2.67
+  m_Height: 2.2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.24, z: 0}
+  m_Center: {x: 0, y: 1.04, z: 0}
