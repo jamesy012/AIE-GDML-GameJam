@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyPickupScript : MonoBehaviour
-{
-    Collider playerCollider;
+public class KillBoxScript : MonoBehaviour {
+
+    public Collider playerCollider;
 
     private void Start()
     {
         playerCollider = GameObject.Find("Player").GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Update is called once per frame
+    void Update () {
+		
+	}
+
+    void OnTriggerEnter(Collider other)
     {
         if (other == playerCollider)
         {
-            Destroy(gameObject);
+            GameObject.Find("Player").GetComponent<PlayerRespawn>().Respawn();
         }
-        
     }
 }
