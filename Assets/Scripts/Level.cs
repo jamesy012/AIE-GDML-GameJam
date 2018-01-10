@@ -81,6 +81,14 @@ public class Level : MonoBehaviour {
         m_player.GetComponent<PlayerMovement>().m_graphics.transform.position = m_player.GetComponent<PlayerMovement>().m_defaultPos.position;
         m_player.GetComponent<PlayerMovement>().m_moveSpeed = 0;
         m_player.GetComponent<PlayerMovement>().StopAllCoroutines();
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+           if(this.transform.GetChild(i).GetComponent<KeyPickupScript>())
+            {
+                this.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+
     }
 
     IEnumerator PanCamera(float time)

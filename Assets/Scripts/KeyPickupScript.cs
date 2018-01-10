@@ -16,7 +16,7 @@ public class KeyPickupScript : MonoBehaviour
         if (other == playerCollider)
         {
             GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel.GetComponent<Level>().AddKey();
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
         
     }
