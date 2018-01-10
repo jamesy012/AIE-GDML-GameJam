@@ -126,4 +126,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79bc942904acbf479945e870611c05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_defaultPos: {fileID: 0}
+  m_flippedPos: {fileID: 0}
   m_moveSpeed: 100
+  m_flipSpeed: 0
+  m_acceleration: 0
+  m_decelleration: 0
+  m_isGrounded: 0
+  m_gravitySwitchAudio: {fileID: 0}
+  m_currentTime: 0
+  m_graphics: {fileID: 0}
+  m_flipped: 0
+  m_maxSpeed: 0

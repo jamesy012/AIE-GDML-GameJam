@@ -193,6 +193,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33520726242663966
 MeshFilter:
@@ -276,6 +277,7 @@ MonoBehaviour:
   m_acceleration: 8
   m_decelleration: 16
   m_isGrounded: 0
+  m_gravitySwitchAudio: {fileID: 0}
   m_currentTime: 0
   m_graphics: {fileID: 4569640245815492}
   m_flipped: 0

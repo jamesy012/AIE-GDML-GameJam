@@ -52,4 +52,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_numberOfKeys: 1
+  m_keys: 0
   m_respawnPoint: {fileID: 0}
+  m_moves: 0
+  m_movesDone: 0
+  m_uiManager: {fileID: 0}
+  m_camera: {fileID: 0}
+  m_levelTriggers: []
+  m_levelComplete: 0
+  m_panTime: 0
+  m_door: {fileID: 0}
+  m_startFlipped: 0
+  m_levelCamPos: {fileID: 0}
