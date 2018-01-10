@@ -14,6 +14,7 @@ public class Level : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        m_player = GameObject.Find("Player");
 	}
 	
 	// Update is called once per frame
@@ -26,7 +27,7 @@ public class Level : MonoBehaviour {
         m_uiManager.SetupKeys(m_numberOfKeys);
     }
 
-    void ResetLevel()
+    public void ResetLevel()
     {
         m_player.transform.position = m_respawnPoint.transform.position;
         Physics.gravity = new Vector3(0, -9.81f, 0);

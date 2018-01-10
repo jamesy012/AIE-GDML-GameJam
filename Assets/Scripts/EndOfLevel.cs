@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyPickupScript : MonoBehaviour
+public class EndOfLevel : MonoBehaviour
 {
     Collider playerCollider;
+
+    public GameObject newLevel;
 
     private void Start()
     {
@@ -15,8 +17,7 @@ public class KeyPickupScript : MonoBehaviour
     {
         if (other == playerCollider)
         {
-            Destroy(gameObject);
+            GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel = newLevel;
         }
-        
     }
 }

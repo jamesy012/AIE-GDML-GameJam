@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33980430722157854}
   - component: {fileID: 23041762362466612}
   - component: {fileID: 95910392034486626}
+  - component: {fileID: 64189803062165832}
+  - component: {fileID: 114659112344745984}
   m_Layer: 0
   m_Name: Key
   m_TagString: Key
@@ -36,7 +38,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1158933273372758}
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0.00000038743013, w: 0.0000003561446}
+<<<<<<< HEAD
+  m_LocalPosition: {x: 2.47, y: 1.64, z: 0}
+=======
   m_LocalPosition: {x: 0, y: 0, z: 0}
+>>>>>>> 0053ac9d5eb7e700d92df62fdac32e660aa02af5
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,6 +87,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1158933273372758}
   m_Mesh: {fileID: 4300000, guid: f80dfde8d4e9d06459467303a7520254, type: 3}
+--- !u!64 &64189803062165832
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158933273372758}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: f80dfde8d4e9d06459467303a7520254, type: 3}
 --- !u!95 &95910392034486626
 Animator:
   serializedVersion: 3
@@ -98,3 +118,14 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114659112344745984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158933273372758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d7e0cbad86a364a92fa466c4b26f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
