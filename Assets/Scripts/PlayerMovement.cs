@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour {
     /// reference to the rigidbody
     /// </summary>
     private Rigidbody m_rigidbody;
+    private Animator m_animator;
 
+    public Transform m_defaultPos, m_flippedPos;
     /// <summary>
     /// movement speed of the player
     /// </summary>
@@ -26,12 +28,15 @@ public class PlayerMovement : MonoBehaviour {
     public bool m_isGrounded = false;
 
     private LayerMask m_playerLayerMask;
+    public float m_currentTime;
+    public Transform m_graphics;
+    public bool m_flipped;
 
     // Use this for initialization
     void Start() {
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerLayerMask = LayerMask.NameToLayer("Player");
-
+        m_animator = GetComponent<Animator>();
         if(gameObject.layer != m_playerLayerMask) {
             Debug.LogError("Please make the players layer to be 'Player'");
         }
@@ -105,6 +110,10 @@ public class PlayerMovement : MonoBehaviour {
             FlipGravity();
         }
 
+       
+         m_animator.SetInteger("Movement", movement);
+        
+
     }
 
     private void SideMovement(int a_movementDirection) {
@@ -117,6 +126,30 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 gravity = Physics.gravity;
         gravity.y *= -1;
         Physics.gravity = gravity;
+        StartCoroutine(FlipPLayer(0.3f));
+        m_flipped = !m_flipped;
+        
+    }
+
+    IEnumerator FlipPLayer(float time)
+    {
+        m_currentTime = 0;
+        while(m_currentTime < time)
+        {
+            m_currentTime += Time.deltaTime;
+            if(m_flipped)
+            {
+                m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_flippedPos.position, m_currentTime / time);
+                m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_flippedPos.rotation, m_currentTime / time);
+            }
+            else
+            {
+                m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_defaultPos.position, m_currentTime / time);
+                m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_defaultPos.rotation, m_currentTime / time);
+            }
+           
+            yield return null;
+        }
     }
 
 
