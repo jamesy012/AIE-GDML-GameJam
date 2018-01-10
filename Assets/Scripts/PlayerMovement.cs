@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     public float m_flipSpeed;
     public int m_acceleration;
     public int m_decelleration;
+    private int m_direction;
 
     /// <summary>
     /// flag to check if the player is grounded
@@ -119,14 +120,15 @@ public class PlayerMovement : MonoBehaviour {
         //calc direction from key inputs
        
         if (keyLeft && (m_moveSpeed > -m_maxSpeed)) {
-          
+            m_graphics.transform.localScale = new Vector3(-1, 1, 1);
             if (m_moveSpeed > 0)
                 m_moveSpeed -= m_acceleration * 4 * Time.deltaTime;
             else if (m_moveSpeed <= 0)
                 m_moveSpeed -= m_acceleration * Time.deltaTime;
         }
         else if (keyRight )
-        { 
+        {
+            m_graphics.transform.localScale = new Vector3(1, 1, 1);
             if (m_moveSpeed < 0)
                 m_moveSpeed += m_acceleration * 4 * Time.deltaTime;
             else if(m_moveSpeed >= 0)
