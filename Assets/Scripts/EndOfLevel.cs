@@ -5,7 +5,7 @@ using UnityEngine;
 public class EndOfLevel : MonoBehaviour
 {
     Collider playerCollider;
-
+    public bool m_active;
     public GameObject newLevel;
 
     private void Start()
@@ -15,11 +15,17 @@ public class EndOfLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == playerCollider)
+        if(m_active)
         {
-            GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel = newLevel;
-            newLevel.GetComponent<Level>().StartLevel();
+            if (other == playerCollider)
+            {
+                GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel = newLevel;
+                newLevel.GetComponent<Level>().StartLevel();
+                m_active = false;
+            }
+
         }
+       
         
     }
 }
