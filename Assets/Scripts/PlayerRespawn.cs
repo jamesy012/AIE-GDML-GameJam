@@ -6,4 +6,9 @@ public class PlayerRespawn : MonoBehaviour{
 
     public Level currentLevel;
 
+    public void Restart()
+    {
+        currentLevel.ResetLevel();
+    }
+
 }

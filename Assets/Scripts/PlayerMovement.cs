@@ -170,6 +170,7 @@ public class PlayerMovement : MonoBehaviour {
         m_currentTime = 0;
         while(m_currentTime < time)
         {
+            
             m_currentTime += Time.deltaTime;
             if(m_flipped)
             {
