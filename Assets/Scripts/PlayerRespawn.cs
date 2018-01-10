@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour{
 
-    public GameObject currentLevel;
+    public Level currentLevel;
 
 }

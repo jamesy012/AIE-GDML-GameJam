@@ -10,8 +10,11 @@ public class Level : MonoBehaviour {
 
     public UIManager m_uiManager;
     private GameObject m_player;
+    public int m_keys;
 
     public List<EndOfLevel> m_levelTriggers;
+    public bool m_levelComplete;
+    public Door m_door;
 
     // Use this for initialization
     void Start()
@@ -24,9 +27,29 @@ public class Level : MonoBehaviour {
             {
                 m_levelTriggers.Add(this.transform.GetChild(i).GetComponent<EndOfLevel>());
             }
+            if (this.transform.GetChild(i).name == "ExitDoor")
+            {
+                m_levelTriggers.Add(this.transform.GetChild(i).GetComponent<EndOfLevel>());
+            }
         }
     }
 	
+    public void AddKey()
+    {
+        m_uiManager.AddKey();
+        m_keys++;
+        if(m_keys == m_numberOfKeys)
+        {
+            m_levelComplete = true;
+            OpenDoor();
+        }
+    }
+
+    public void OpenDoor()
+    {
+        m_door.m_animtor.SetTrigger("Open");
+    }
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -35,7 +58,6 @@ public class Level : MonoBehaviour {
     public void StartLevel()
     {
         m_uiManager.SetupKeys(m_numberOfKeys);
-        
     }
 
     public void ResetLevel()
