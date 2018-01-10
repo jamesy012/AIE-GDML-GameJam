@@ -8,7 +8,7 @@ public class CoreGameManager : MonoBehaviour {
     public GameObject m_UI;
 	// Use this for initialization
 	void Start () {
-        DontDestroyOnLoad(this.gameObject);
+        
         m_UI.SetActive(true);
 	}
 	

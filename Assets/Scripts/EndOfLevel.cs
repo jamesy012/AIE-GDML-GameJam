@@ -19,11 +19,11 @@ public class EndOfLevel : MonoBehaviour
         {
             if (other == playerCollider)
             {
-                if (GameObject.Find("Player").GetComponent<Player>().currentLevel != null)
+                if (GameObject.Find("Player").GetComponent<Player>().m_currentLevel != null)
                 {
-                    GameObject.Find("Player").GetComponent<Player>().currentLevel.m_door.m_animtor.SetTrigger("Close");
+                    GameObject.Find("Player").GetComponent<Player>().m_currentLevel.m_door.m_animtor.SetTrigger("Close");
                 }
-                GameObject.Find("Player").GetComponent<Player>().currentLevel = newLevel;
+                GameObject.Find("Player").GetComponent<Player>().m_currentLevel = newLevel;
                 newLevel.GetComponent<Level>().StartLevel();
                 m_active = false;
             }
