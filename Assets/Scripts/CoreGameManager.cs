@@ -20,6 +20,11 @@ public class CoreGameManager : MonoBehaviour {
         SceneManager.LoadScene(a_level);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 
 
 }
