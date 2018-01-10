@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool m_flipped;
     public float m_maxSpeed;
 
+
     // Use this for initialization
     void Start() {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -67,59 +68,13 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        //calc grounded
-        m_isGrounded = false;//reset
-        //work out which way the gravity is going
-        float isGravityUp = Mathf.Sign(Physics.gravity.y);
-        //the character is offset from being centered, it's anchored to the bottom side of the player
-        Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
-        float playerXOffset = 0.5f;
-        //go between -1 and 1, used as a direction scale
-        for (int i = -1; i < 2; i++) {
-            //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
-            //offset based on i(direction)
-            float xOffset = i * playerXOffset;
-            //draw a debug ray to show off where the ray is
-            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset,0,0), Vector3.up * isGravityUp * 2);
-            //finally work out if the player is on the ground
-            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
-            //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
-            //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
-            if (m_isGrounded) {
-                break;
-            }
-        }
-
-        //if the player is not grounded dont run the movement/gravity flip code
-        
-        //if (!m_isGrounded) {
-        //    return;
-        //}
-
       
-        if(m_isGrounded)
-        {
-            if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
-            {
-                bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
-                //go gravity flip
-                if (keyGravityFlip)
-                {
-                    FlipGravity();
-                    m_player.m_currentLevel.m_movesDone++;
-                    m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
-
-                }
-            }
-        }
-
-   
 
         //calc direction from key inputs
-       
-        
+
+     
         //do movement
-        SideMovement();
+       
         if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
         {
             StartCoroutine(FlipPLayer(m_flipSpeed));
@@ -135,6 +90,48 @@ public class PlayerMovement : MonoBehaviour {
 
     public void FixedUpdate()
     {
+        //calc grounded
+        m_isGrounded = false;//reset
+        //work out which way the gravity is going
+        float isGravityUp = Mathf.Sign(Physics.gravity.y);
+        //the character is offset from being centered, it's anchored to the bottom side of the player
+        Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
+        float playerXOffset = 0.5f;
+        //go between -1 and 1, used as a direction scale
+        for (int i = -1; i < 2; i++)
+        {
+            //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
+            //offset based on i(direction)
+            float xOffset = i * playerXOffset;
+            //draw a debug ray to show off where the ray is
+            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp * 2);
+            //finally work out if the player is on the ground
+            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
+            //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
+            //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
+            if (m_isGrounded)
+            {
+                break;
+            }
+        }
+        if (m_isGrounded)
+        {
+            if (m_player.m_currentLevel != null)
+            {
+                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
+                {
+                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+                    //go gravity flip
+                    if (keyGravityFlip)
+                    {
+                        FlipGravity();
+                        m_player.m_currentLevel.m_movesDone++;
+                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
+
+                    }
+                }
+            }
+        }
         //get key inputs
         bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
@@ -165,7 +162,9 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
+        SideMovement();
     }
+
     public void ResetVariables()
     {
         
