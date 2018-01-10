@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private Rigidbody m_rigidbody;
     private Animator m_animator;
-    private PlayerRespawn m_player;
+    private Player m_player;
     public Transform m_defaultPos, m_flippedPos;
     /// <summary>
     /// movement speed of the player
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerLayerMask = LayerMask.NameToLayer("Player");
         m_animator = GetComponent<Animator>();
-        m_player = GetComponent<PlayerRespawn>();
+        m_player = GetComponent<Player>();
 
         if(gameObject.layer != m_playerLayerMask) {
             Debug.LogError("Please make the players layer to be 'Player'");
@@ -154,6 +154,28 @@ public class PlayerMovement : MonoBehaviour {
         if (m_graphics.transform.rotation == m_defaultPos.rotation && m_flipped)
         {
             StartCoroutine(FlipPLayer(m_flipSpeed));
+        }
+        
+        
+
+    }
+
+    public void ResetVariables()
+    {
+        
+        StopAllCoroutines();
+        m_moveSpeed = 0;
+        if (m_player.currentLevel.m_startFlipped)
+        {
+            m_graphics.transform.rotation = m_flippedPos.rotation;
+            m_graphics.transform.position = m_flippedPos.position;
+            m_flipped = true;
+        }
+        else
+        {
+            m_graphics.transform.rotation = m_defaultPos.rotation;
+            m_graphics.transform.position = m_defaultPos.position;
+            m_flipped = false;
         }
 
     }

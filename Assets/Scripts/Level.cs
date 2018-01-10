@@ -16,13 +16,13 @@ public class Level : MonoBehaviour {
     private Vector3 m_defaultGravity;
     public GameObject m_camera;
     public List<EndOfLevel> m_levelTriggers;
-
     private float m_currentTime;
     public bool m_levelComplete;
     public float m_panTime;
     public Door m_door;
-
+    public bool m_startFlipped;
     public Transform m_levelCamPos;
+
     // Use this for initialization
     void Start()
     {
@@ -70,17 +70,12 @@ public class Level : MonoBehaviour {
     public void ResetLevel()
     {
         m_player.transform.position = m_respawnPoint.transform.position;
-     
         Physics.gravity = m_defaultGravity;
         m_uiManager.SetupKeys(m_numberOfKeys);
         StartCoroutine(PanCamera(3));
         m_uiManager.SetupMoves(m_moves, m_moves);
         m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_movesDone = 0;
-        m_player.GetComponent<PlayerMovement>().m_graphics.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
-        m_player.GetComponent<PlayerMovement>().m_graphics.transform.position = m_player.GetComponent<PlayerMovement>().m_defaultPos.position;
-        m_player.GetComponent<PlayerMovement>().m_moveSpeed = 0;
-        m_player.GetComponent<PlayerMovement>().StopAllCoroutines();
         for (int i = 0; i < this.transform.childCount; i++)
         {
            if(this.transform.GetChild(i).GetComponent<KeyPickupScript>())

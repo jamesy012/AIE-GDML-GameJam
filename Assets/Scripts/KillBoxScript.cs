@@ -16,8 +16,7 @@ public class KillBoxScript : MonoBehaviour {
     {
         if (other == playerCollider.GetComponent<Collider>())
         {
-            playerCollider.GetComponent<PlayerRespawn>().currentLevel.GetComponent<Level>().ResetLevel();
-
+            playerCollider.GetComponent<Player>().Restart();
         }
     }
 }
