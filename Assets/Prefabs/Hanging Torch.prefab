@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 23038308466793798}
   - component: {fileID: 95799756361631418}
   - component: {fileID: 65329591373475146}
+  - component: {fileID: 114116901067654118}
+  - component: {fileID: 114810064336826598}
   m_Layer: 0
   m_Name: Hanging Torch
   m_TagString: Untagged
@@ -122,7 +124,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.34, y: 0.75, z: 1.1632053}
+  m_Size: {x: 1.54, y: 0.75, z: 1.1632053}
   m_Center: {x: -0.0000020265545, y: -0.44, z: 0.0000016421153}
 --- !u!65 &65687592479950646
 BoxCollider:
@@ -134,8 +136,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.17, y: 0.3, z: 1}
-  m_Center: {x: 0, y: -1.01, z: 0}
+  m_Size: {x: 1.17, y: 0.65, z: 1.46}
+  m_Center: {x: 0, y: -1.11, z: 0}
 --- !u!95 &95799756361631418
 Animator:
   serializedVersion: 3
@@ -153,3 +155,27 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114116901067654118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1326041363359586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97bf17a15db275419371196cfaaf322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCollider: {fileID: 0}
+--- !u!114 &114810064336826598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1326041363359586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97bf17a15db275419371196cfaaf322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCollider: {fileID: 0}
