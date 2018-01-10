@@ -11,19 +11,22 @@ public class Level : MonoBehaviour {
 
     public UIManager m_uiManager;
     private GameObject m_player;
-   
 
+    public GameObject m_camera;
     public List<EndOfLevel> m_levelTriggers;
 
+    private float m_currentTime;
     public bool m_levelComplete;
-
+    public float m_panTime;
     public Door m_door;
 
+    public Transform m_levelCamPos;
     // Use this for initialization
     void Start()
     {
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         m_player = GameObject.Find("Player");
+        m_camera = GameObject.Find("Main Camera");
         for (int i = 0; i < this.transform.childCount; i++)
         {
             if(this.transform.GetChild(i).GetComponent<EndOfLevel>())
@@ -57,6 +60,7 @@ public class Level : MonoBehaviour {
     public void StartLevel()
     {
         m_uiManager.SetupKeys(m_numberOfKeys);
+        StartCoroutine(PanCamera(3));
     }
 
     public void ResetLevel()
@@ -65,5 +69,17 @@ public class Level : MonoBehaviour {
         m_player.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
         Physics.gravity = new Vector3(0, -9.81f, 0);
         m_uiManager.SetupKeys(m_numberOfKeys);
+        StartCoroutine(PanCamera(3));
+    }
+
+    IEnumerator PanCamera(float time)
+    {
+        m_currentTime = 0;
+        while (m_currentTime < time)
+        {
+            m_currentTime += Time.deltaTime;
+            m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_levelCamPos.position, m_currentTime / time);
+            yield return null;
+        }
     }
 }
