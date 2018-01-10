@@ -5,15 +5,18 @@ using UnityEngine;
 public class Level : MonoBehaviour {
 
     public int m_numberOfKeys;
+    public int m_keys;
 
     public Transform m_respawnPoint;
 
     public UIManager m_uiManager;
     private GameObject m_player;
-    public int m_keys;
+   
 
     public List<EndOfLevel> m_levelTriggers;
+
     public bool m_levelComplete;
+
     public Door m_door;
 
     // Use this for initialization
@@ -50,10 +53,6 @@ public class Level : MonoBehaviour {
         m_door.m_animtor.SetTrigger("Open");
     }
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void StartLevel()
     {

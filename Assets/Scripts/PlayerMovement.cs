@@ -56,15 +56,27 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //calc grounded
+        m_isGrounded = false;//reset
         //work out which way the gravity is going
         float isGravityUp = Mathf.Sign(Physics.gravity.y);
         //the character is offset from being centered, it's anchored to the bottom side of the player
         Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
-        //draw a debug ray to show off where the ray is
-        Debug.DrawRay(transform.position + playerCharacterOffset, Vector3.up * isGravityUp * 2);
-        //finally work out if the player is on the ground
-        m_isGrounded = Physics.Raycast(transform.position + playerCharacterOffset, Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
-        //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
+        float playerXOffset = 0.5f;
+        //go between -1 and 1, used as a direction scale
+        for (int i = -1; i < 2; i++) {
+            //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
+            //offset based on i(direction)
+            float xOffset = i * playerXOffset;
+            //draw a debug ray to show off where the ray is
+            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset,0,0), Vector3.up * isGravityUp * 2);
+            //finally work out if the player is on the ground
+            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
+            //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
+            //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
+            if (m_isGrounded) {
+                break;
+            }
+        }
 
         //if the player is not grounded dont run the movement/gravity flip code
         if (!m_isGrounded) {
