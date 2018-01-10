@@ -31,6 +31,14 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     public bool m_isGrounded = false;
 
+
+    /// <summary>
+    /// Sound effect storage
+    /// </summary>
+    public AudioClip m_gravitySwitchAudio;
+
+
+
     private LayerMask m_playerLayerMask;
     public float m_currentTime;
     public Transform m_graphics;
@@ -68,7 +76,28 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+      
 
+        //calc direction from key inputs
+
+     
+        //do movement
+       
+        if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
+        {
+            StartCoroutine(FlipPLayer(m_flipSpeed));
+        }
+        if (m_graphics.transform.rotation == m_defaultPos.rotation && m_flipped)
+        {
+            StartCoroutine(FlipPLayer(m_flipSpeed));
+        }
+        
+        
+
+    }
+
+    public void FixedUpdate()
+    {
         //calc grounded
         m_isGrounded = false;//reset
         //work out which way the gravity is going
@@ -111,27 +140,6 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
         }
-        //calc direction from key inputs
-
-
-        //do movement
-
-        if (m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
-        {
-            StartCoroutine(FlipPLayer(m_flipSpeed));
-        }
-        if (m_graphics.transform.rotation == m_defaultPos.rotation && m_flipped)
-        {
-            StartCoroutine(FlipPLayer(m_flipSpeed));
-        }
-        
-        
-
-    }
-
-    public void FixedUpdate()
-    {
-      
         //get key inputs
         bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
@@ -203,6 +211,7 @@ public class PlayerMovement : MonoBehaviour {
 
     IEnumerator FlipPLayer(float time)
     {
+        SoundManager.PlaySFX(m_gravitySwitchAudio);
         m_currentTime = 0;
      
         while (m_currentTime < time)
