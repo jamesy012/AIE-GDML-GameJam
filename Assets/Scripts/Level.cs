@@ -70,7 +70,7 @@ public class Level : MonoBehaviour {
     public void ResetLevel()
     {
         m_player.transform.position = m_respawnPoint.transform.position;
-      
+     
         Physics.gravity = m_defaultGravity;
         m_uiManager.SetupKeys(m_numberOfKeys);
         StartCoroutine(PanCamera(3));
