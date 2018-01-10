@@ -9,6 +9,7 @@ public class Level : MonoBehaviour {
     public Transform m_respawnPoint;
 
     private UIManager m_uiManager;
+    private GameObject m_player;
 	
     // Use this for initialization
 	void Start () {
@@ -22,6 +23,13 @@ public class Level : MonoBehaviour {
 
     void StartLevel()
     {
+        m_uiManager.SetupKeys(m_numberOfKeys);
+    }
+
+    void ResetLevel()
+    {
+        m_player.transform.position = m_respawnPoint.transform.position;
+        Physics.gravity = new Vector3(0, -9.81f, 0);
         m_uiManager.SetupKeys(m_numberOfKeys);
     }
 }
