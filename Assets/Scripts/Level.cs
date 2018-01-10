@@ -78,6 +78,7 @@ public class Level : MonoBehaviour {
         m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_movesDone = 0;
         m_player.GetComponent<PlayerMovement>().m_graphics.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
+        m_player.GetComponent<PlayerMovement>().m_graphics.transform.position = m_player.GetComponent<PlayerMovement>().m_defaultPos.position;
         m_player.GetComponent<PlayerMovement>().m_moveSpeed = 0;
         m_player.GetComponent<PlayerMovement>().StopAllCoroutines();
     }
