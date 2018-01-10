@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class KillBoxScript : MonoBehaviour {
 
-    public Collider playerCollider;
+    public GameObject playerCollider;
+    //public GameObject currentLevel;
 
     private void Start()
     {
-        playerCollider = GameObject.Find("Player").GetComponent<Collider>();
+        playerCollider = GameObject.Find("Player");
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
     void OnTriggerEnter(Collider other)
     {
-        if (other == playerCollider)
+        if (other == playerCollider.GetComponent<Collider>())
         {
-            GameObject.Find("Player").GetComponent<PlayerRespawn>().Respawn();
+            playerCollider.GetComponent<PlayerRespawn>().currentLevel.GetComponent<Level>().ResetLevel();
         }
     }
 }
