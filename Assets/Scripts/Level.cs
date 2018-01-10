@@ -8,7 +8,7 @@ public class Level : MonoBehaviour {
 
     public Transform m_respawnPoint;
 
-    private UIManager m_uiManager;
+    public UIManager m_uiManager;
     private GameObject m_player;
 	
     // Use this for initialization
