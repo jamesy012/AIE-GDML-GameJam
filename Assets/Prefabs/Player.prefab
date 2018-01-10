@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 65174425211911496}
   - component: {fileID: 114124038189208342}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,3 +182,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_moveSpeed: 1000
+  m_isGrounded: 0
