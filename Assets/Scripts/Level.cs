@@ -13,7 +13,7 @@ public class Level : MonoBehaviour {
     public int m_movesDone;
     public UIManager m_uiManager;
     private GameObject m_player;
-
+    private Vector3 m_defaultGravity;
     public GameObject m_camera;
     public List<EndOfLevel> m_levelTriggers;
 
@@ -29,6 +29,7 @@ public class Level : MonoBehaviour {
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         m_player = GameObject.Find("Player");
         m_camera = GameObject.Find("Main Camera");
+        m_defaultGravity = Physics.gravity;
         for (int i = 0; i < this.transform.childCount; i++)
         {
             if(this.transform.GetChild(i).GetComponent<EndOfLevel>())
@@ -69,12 +70,15 @@ public class Level : MonoBehaviour {
     public void ResetLevel()
     {
         m_player.transform.position = m_respawnPoint.transform.position;
-        m_player.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
-        Physics.gravity = new Vector3(0, -9.81f, 0);
+      
+        Physics.gravity = m_defaultGravity;
         m_uiManager.SetupKeys(m_numberOfKeys);
         StartCoroutine(PanCamera(3));
         m_uiManager.SetupMoves(m_moves, m_moves);
+        m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_movesDone = 0;
+        m_player.GetComponent<PlayerMovement>().m_graphics.transform.rotation = m_player.GetComponent<PlayerMovement>().m_defaultPos.rotation;
+        m_player.GetComponent<PlayerMovement>().m_moveSpeed = 0;
     }
 
     IEnumerator PanCamera(float time)
@@ -83,7 +87,8 @@ public class Level : MonoBehaviour {
         while (m_currentTime < time)
         {
             m_currentTime += Time.deltaTime;
-            m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_levelCamPos.position, m_currentTime / time);
+            if(m_levelCamPos != null)
+                m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_levelCamPos.position, m_currentTime / time);
             yield return null;
         }
     }
