@@ -8,14 +8,24 @@ public class Level : MonoBehaviour {
 
     public Transform m_respawnPoint;
 
-    private UIManager m_uiManager;
+    public UIManager m_uiManager;
     private GameObject m_player;
-	
+
+    public List<EndOfLevel> m_levelTriggers;
+
     // Use this for initialization
-	void Start () {
+    void Start()
+    {
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         m_player = GameObject.Find("Player");
-	}
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            if(this.transform.GetChild(i).GetComponent<EndOfLevel>())
+            {
+                m_levelTriggers.Add(this.transform.GetChild(i).GetComponent<EndOfLevel>());
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,6 +35,7 @@ public class Level : MonoBehaviour {
     public void StartLevel()
     {
         m_uiManager.SetupKeys(m_numberOfKeys);
+        
     }
 
     public void ResetLevel()

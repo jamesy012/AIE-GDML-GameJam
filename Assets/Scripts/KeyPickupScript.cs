@@ -5,7 +5,7 @@ using UnityEngine;
 public class KeyPickupScript : MonoBehaviour
 {
     Collider playerCollider;
-
+    
     private void Start()
     {
         playerCollider = GameObject.Find("Player").GetComponent<Collider>();
@@ -15,6 +15,7 @@ public class KeyPickupScript : MonoBehaviour
     {
         if (other == playerCollider)
         {
+            GameObject.Find("Player").GetComponent<PlayerRespawn>().currentLevel.GetComponent<Level>().m_uiManager.AddKey();
             Destroy(gameObject);
         }
         
