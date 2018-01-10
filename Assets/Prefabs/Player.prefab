@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33747836581683920}
   - component: {fileID: 23356214437422750}
   - component: {fileID: 95067056092660236}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lucy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114302708595437900}
   - component: {fileID: 65174425211911496}
   - component: {fileID: 114124038189208342}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1315124761388322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.490282, y: 0.55999994, z: 0}
+  m_LocalPosition: {x: 1, y: -1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4530845255236940}
@@ -135,12 +135,12 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1315124761388322}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e6ee55b0c1980d941816c6b00e8cd4e6, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2.8, z: 1.88}
-  m_Center: {x: -0.43, y: 1.34, z: 0}
+  m_Size: {x: 1, y: 2.8, z: 1.88}
+  m_Center: {x: 0, y: 1.34, z: 0}
 --- !u!95 &95067056092660236
 Animator:
   serializedVersion: 3
@@ -181,5 +181,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79bc942904acbf479945e870611c05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 1000
+  m_moveSpeed: 700
   m_isGrounded: 0
