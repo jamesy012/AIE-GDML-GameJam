@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private Rigidbody m_rigidbody;
     private Animator m_animator;
-
+    private PlayerRespawn m_player;
     public Transform m_defaultPos, m_flippedPos;
     /// <summary>
     /// movement speed of the player
@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerLayerMask = LayerMask.NameToLayer("Player");
         m_animator = GetComponent<Animator>();
+        m_player = GetComponent<PlayerRespawn>();
+
         if(gameObject.layer != m_playerLayerMask) {
             Debug.LogError("Please make the players layer to be 'Player'");
         }
@@ -98,13 +100,20 @@ public class PlayerMovement : MonoBehaviour {
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
         if(m_isGrounded)
         {
-            bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
-            //go gravity flip
-            if (keyGravityFlip)
+            if (m_player.currentLevel.m_movesDone < m_player.currentLevel.m_moves)
             {
-                FlipGravity();
+                bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+                //go gravity flip
+                if (keyGravityFlip)
+                {
+                    FlipGravity();
+                    m_player.currentLevel.m_movesDone++;
+                    m_player.currentLevel.m_uiManager.SetupMoves(m_player.currentLevel.m_moves - m_player.currentLevel.m_movesDone, m_player.currentLevel.m_moves);
+
+                }
             }
         }
+
    
 
         //calc direction from key inputs
@@ -136,9 +145,7 @@ public class PlayerMovement : MonoBehaviour {
         m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
         //do movement
         SideMovement();
-       
-       
-        
+      
 
     }
 

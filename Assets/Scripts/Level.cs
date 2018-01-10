@@ -9,6 +9,8 @@ public class Level : MonoBehaviour {
 
     public Transform m_respawnPoint;
 
+    public int m_moves;
+    public int m_movesDone;
     public UIManager m_uiManager;
     private GameObject m_player;
 
@@ -61,6 +63,7 @@ public class Level : MonoBehaviour {
     {
         m_uiManager.SetupKeys(m_numberOfKeys);
         StartCoroutine(PanCamera(3));
+        m_uiManager.SetupMoves(m_moves, m_moves);
     }
 
     public void ResetLevel()
@@ -70,6 +73,8 @@ public class Level : MonoBehaviour {
         Physics.gravity = new Vector3(0, -9.81f, 0);
         m_uiManager.SetupKeys(m_numberOfKeys);
         StartCoroutine(PanCamera(3));
+        m_uiManager.SetupMoves(m_moves, m_moves);
+        m_movesDone = 0;
     }
 
     IEnumerator PanCamera(float time)

@@ -6,14 +6,17 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour {
 
+    public Image m_movesBar;
     public Transform m_keyPanel;
     public GameObject m_keyImagePrefab;
     public List<GameObject> m_keySprites;
+
     public List<Transform> m_objectsToDestroy;
 
     public Sprite m_keyOnImage;
     public Sprite m_keyOffImage;
 
+    public Text m_movesLeftText;
     public int m_numberOfKeysActive;
 
     // Use this for initialization
@@ -53,6 +56,15 @@ public class UIManager : MonoBehaviour {
         } 
     }
 
- 
+    public void SetupMoves(int a_moves, int m_maxMoves)
+    {
+        m_movesLeftText.text = a_moves.ToString();
+        m_movesBar.fillAmount = (float)a_moves / m_maxMoves;
+        Debug.Log(a_moves +" " + m_maxMoves);
+        Debug.Log(a_moves / m_maxMoves);
+    }
+    
+
+
 
 }
