@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1312299312686312}
   m_LocalRotation: {x: -1, y: 0.00000028088027, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4325869805955642}
@@ -193,7 +193,6 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33520726242663966
 MeshFilter:
@@ -254,10 +253,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1315124761388322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcad2992eaaffa742bf3c2248bf4d861, type: 3}
+  m_Script: {fileID: 11500000, guid: b52ba7d1621f8ce45b6af8ec8e48f809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: {fileID: 0}
+  m_player: {fileID: 0}
+  m_currentLevel: {fileID: 0}
 --- !u!114 &114302708595437900
 MonoBehaviour:
   m_ObjectHideFlags: 1

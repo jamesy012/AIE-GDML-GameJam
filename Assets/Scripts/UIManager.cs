@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        DontDestroyOnLoad(this.gameObject);
+
         
 	}
 	
@@ -61,8 +61,7 @@ public class UIManager : MonoBehaviour {
     {
         m_movesLeftText.text = a_moves.ToString();
         m_movesBar.fillAmount = (float)a_moves / m_maxMoves;
-        Debug.Log(a_moves +" " + m_maxMoves);
-        Debug.Log(a_moves / m_maxMoves);
+      
     }
     
 

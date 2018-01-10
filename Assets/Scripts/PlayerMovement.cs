@@ -96,20 +96,18 @@ public class PlayerMovement : MonoBehaviour {
         //    return;
         //}
 
-        //get key inputs
-        bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
-        bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
+      
         if(m_isGrounded)
         {
-            if (m_player.currentLevel.m_movesDone < m_player.currentLevel.m_moves)
+            if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
             {
                 bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
                 //go gravity flip
                 if (keyGravityFlip)
                 {
                     FlipGravity();
-                    m_player.currentLevel.m_movesDone++;
-                    m_player.currentLevel.m_uiManager.SetupMoves(m_player.currentLevel.m_moves - m_player.currentLevel.m_movesDone, m_player.currentLevel.m_moves);
+                    m_player.m_currentLevel.m_movesDone++;
+                    m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
 
                 }
             }
@@ -119,32 +117,7 @@ public class PlayerMovement : MonoBehaviour {
 
         //calc direction from key inputs
        
-        if (keyLeft && (m_moveSpeed > -m_maxSpeed)) {
-            m_graphics.transform.localScale = new Vector3(-1, 1, 1);
-            if (m_moveSpeed > 0)
-                m_moveSpeed -= m_acceleration * 4 * Time.deltaTime;
-            else if (m_moveSpeed <= 0)
-                m_moveSpeed -= m_acceleration * Time.deltaTime;
-        }
-        else if (keyRight )
-        {
-            m_graphics.transform.localScale = new Vector3(1, 1, 1);
-            if (m_moveSpeed < 0)
-                m_moveSpeed += m_acceleration * 4 * Time.deltaTime;
-            else if(m_moveSpeed >= 0)
-                m_moveSpeed += m_acceleration * Time.deltaTime;
-        }
-        else
-        {
-            if (m_moveSpeed > m_decelleration * Time.deltaTime)
-                m_moveSpeed -= m_decelleration * Time.deltaTime;
-            else if (m_moveSpeed < -m_decelleration * Time.deltaTime)
-                m_moveSpeed = m_moveSpeed + m_decelleration * Time.deltaTime;
-            else
-                m_moveSpeed = 0;
-        }
-
-        m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
+        
         //do movement
         SideMovement();
         if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
@@ -160,12 +133,45 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    public void FixedUpdate()
+    {
+        //get key inputs
+        bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
+        bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
+        if (keyLeft && (m_moveSpeed > -m_maxSpeed))
+        {
+            m_graphics.transform.localScale = new Vector3(-1, 1, 1);
+            if (m_moveSpeed > 0)
+                m_moveSpeed -= m_acceleration * 4 * Time.deltaTime;
+            else if (m_moveSpeed <= 0)
+                m_moveSpeed -= m_acceleration * Time.deltaTime;
+        }
+        else if (keyRight)
+        {
+            m_graphics.transform.localScale = new Vector3(1, 1, 1);
+            if (m_moveSpeed < 0)
+                m_moveSpeed += m_acceleration * 4 * Time.deltaTime;
+            else if (m_moveSpeed >= 0)
+                m_moveSpeed += m_acceleration * Time.deltaTime;
+        }
+        else
+        {
+            if (m_moveSpeed > m_decelleration * Time.deltaTime)
+                m_moveSpeed -= m_decelleration * Time.deltaTime;
+            else if (m_moveSpeed < -m_decelleration * Time.deltaTime)
+                m_moveSpeed = m_moveSpeed + m_decelleration * Time.deltaTime;
+            else
+                m_moveSpeed = 0;
+        }
+
+        m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
+    }
     public void ResetVariables()
     {
         
         StopAllCoroutines();
         m_moveSpeed = 0;
-        if (m_player.currentLevel.m_startFlipped)
+        if (m_player.m_currentLevel.m_startFlipped)
         {
             m_graphics.transform.rotation = m_flippedPos.rotation;
             m_graphics.transform.position = m_flippedPos.position;
