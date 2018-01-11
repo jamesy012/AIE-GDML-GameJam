@@ -9,7 +9,7 @@ public class KillBoxScript : MonoBehaviour {
 
     private void Start()
     {
-        playerCollider = GameObject.Find("PlayerCollider");
+        playerCollider = GameObject.Find("PlayerTrigger");
     }
 
     void OnTriggerEnter(Collider other)
