@@ -13,13 +13,12 @@ public class EndOfLevel : MonoBehaviour
     public int goldStar;
     public int silverStar;
     public int bronzeStar;
-    private Level currentLevel;
+    public Level currentLevel;
 
     private void Start()
     {
         player = GameObject.Find("Player");
         playerCollider = player.GetComponent<Collider>();
-        currentLevel = player.GetComponent<Player>().m_currentLevel.GetComponent<Level>();
 
     }
 
