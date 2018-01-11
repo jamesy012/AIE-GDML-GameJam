@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class References : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public List<Sprite> m_starSprites;
+    public List<GameObject> m_stars;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
