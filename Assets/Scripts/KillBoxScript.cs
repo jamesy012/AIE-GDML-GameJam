@@ -5,18 +5,17 @@ using UnityEngine;
 public class KillBoxScript : MonoBehaviour {
 
     public GameObject playerCollider;
-    //public GameObject currentLevel;
-
+   
     private void Start()
     {
-        playerCollider = GameObject.Find("Player");
+        playerCollider = GameObject.Find("PlayerCollider");
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other == playerCollider.GetComponent<Collider>())
         {
-            playerCollider.GetComponent<Player>().Restart();
+            playerCollider.GetComponentInParent<Player>().Restart();
         }
     }
 }

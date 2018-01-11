@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     private Animator m_animator;
     private Player m_player;
     public Transform m_defaultPos, m_flippedPos;
+
     /// <summary>
     /// movement speed of the player
     /// </summary>
