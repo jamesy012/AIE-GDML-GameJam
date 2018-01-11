@@ -23,9 +23,22 @@ public class Level : MonoBehaviour {
     public bool m_startFlipped;
     public Transform m_levelCamPos;
 
+    [System.Serializable]
+    public struct GravityDirection {
+        [HideInInspector]
+        public string m_name;
+        public bool m_allowDirection;
+    }
+
+    public GravityDirection[] m_gravityDirection = new GravityDirection[4]; 
+
     // Use this for initialization
     void Start()
     {
+        for (int i = 0; i < m_gravityDirection.Length; i++) {
+            m_gravityDirection[i].m_allowDirection = true;
+        }
+
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         m_player = GameObject.Find("Player");
         m_camera = GameObject.Find("Main Camera");
@@ -76,6 +89,7 @@ public class Level : MonoBehaviour {
         m_uiManager.SetupMoves(m_moves, m_moves);
         m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_movesDone = 0;
+        m_keys = 0;
         for (int i = 0; i < this.transform.childCount; i++)
         {
            if(this.transform.GetChild(i).GetComponent<KeyPickupScript>())
@@ -95,6 +109,12 @@ public class Level : MonoBehaviour {
             if(m_levelCamPos != null)
                 m_camera.transform.position = Vector3.Lerp(m_camera.transform.position, m_levelCamPos.position, m_currentTime / time);
             yield return null;
+        }
+    }
+
+    private void OnValidate() {
+        for(int i = 0; i < m_gravityDirection.Length; i++) {
+            m_gravityDirection[i].m_name = ((PlayerMovement.Direction)i).ToString().Remove(0,1);
         }
     }
 }
