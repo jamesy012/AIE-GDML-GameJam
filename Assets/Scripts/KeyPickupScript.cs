@@ -8,7 +8,7 @@ public class KeyPickupScript : MonoBehaviour
     
     private void Start()
     {
-        playerCollider = GameObject.Find("Player").GetComponent<Collider>();
+        playerCollider = GameObject.Find("PlayerTrigger").GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
