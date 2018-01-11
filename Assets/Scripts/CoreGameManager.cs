@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class CoreGameManager : MonoBehaviour {
 
+    public AudioClip backgroundMusic;
+
 	// Use this for initialization
-	void Start () {
-        
+	void Start ()
+    {
 	}
 	
 	// Update is called once per frame

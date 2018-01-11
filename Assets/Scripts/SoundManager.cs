@@ -82,10 +82,11 @@ public class SoundManager : MonoBehaviour
         float elapsed = 0f;
         while (duration > 0)
         {
+        
             float t = (elapsed / duration);
+            duration -= Time.deltaTime;
             float volume = Mathf.Lerp(0f, fadeToVolume * currentVolumeNormalized_BGM, t);
             soundMan.bgmSource.volume = volume;
-
             elapsed += Time.deltaTime;
             yield return 0;
         }
@@ -100,8 +101,11 @@ public class SoundManager : MonoBehaviour
             if (soundMan.bgmSource.isPlaying)
             {
                 //Fade out then in
-                soundMan.FadeBGMOut (fadeDuration / 2);
-                soundMan.FadeBGMIn(bgmClip, fadeDuration / 2, fadeDuration / 2);
+                //soundMan.FadeBGMOut (fadeDuration / 2);
+                soundMan.FadeBGMIn(bgmClip, fadeDuration, fadeDuration);
+
+                //soundMan.StartCoroutine(soundMan.Countdown(soundMan, bgmClip, fade, fadeDuration));
+
             }
             else
             {
@@ -118,6 +122,11 @@ public class SoundManager : MonoBehaviour
             soundMan.bgmSource.clip = bgmClip;
             soundMan.bgmSource.Play();
         }
+    }
+    IEnumerator Countdown(SoundManager soundMan, AudioClip bgmClip, bool fade, float fadeDuration)
+    {
+        yield return new WaitForSeconds(3);
+        soundMan.FadeBGMIn(bgmClip, fadeDuration / 2, fadeDuration / 2);
     }
 
     public static void StopBGM(bool fade, float fadeDuration)
