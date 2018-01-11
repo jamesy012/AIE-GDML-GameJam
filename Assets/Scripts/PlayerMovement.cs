@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     private Animator m_animator;
     private Player m_player;
     public Transform m_defaultPos, m_flippedPos;
+
     /// <summary>
     /// movement speed of the player
     /// </summary>
@@ -76,14 +77,30 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-      
+
 
         //calc direction from key inputs
+        if (m_isGrounded)
+        {
+            if (m_player.m_currentLevel != null)
+            {
+                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
+                {
+                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+                    //go gravity flip
+                    if (keyGravityFlip)
+                    {
+                        FlipGravity();
+                        m_player.m_currentLevel.m_movesDone++;
+                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
 
-     
+                    }
+                }
+            }
+        }
         //do movement
-       
-        if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
+
+        if (m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
         {
             StartCoroutine(FlipPLayer(m_flipSpeed));
         }
@@ -105,16 +122,17 @@ public class PlayerMovement : MonoBehaviour {
         //the character is offset from being centered, it's anchored to the bottom side of the player
         Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
         float playerXOffset = 0.5f;
+        int[] offsets = { 0, -1, 1 };
         //go between -1 and 1, used as a direction scale
-        for (int i = -1; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
             //offset based on i(direction)
-            float xOffset = i * playerXOffset;
+            float xOffset = offsets[i] * playerXOffset;
             //draw a debug ray to show off where the ray is
-            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp * 2);
+            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp * 2);
             //finally work out if the player is on the ground
-            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
+            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp, 2, ~(1<<m_playerLayerMask.value));
             //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
             //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
             if (m_isGrounded)
@@ -122,24 +140,7 @@ public class PlayerMovement : MonoBehaviour {
                 break;
             }
         }
-        if (m_isGrounded)
-        {
-            if (m_player.m_currentLevel != null)
-            {
-                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
-                {
-                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
-                    //go gravity flip
-                    if (keyGravityFlip)
-                    {
-                        FlipGravity();
-                        m_player.m_currentLevel.m_movesDone++;
-                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
-
-                    }
-                }
-            }
-        }
+        
         //get key inputs
         bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
