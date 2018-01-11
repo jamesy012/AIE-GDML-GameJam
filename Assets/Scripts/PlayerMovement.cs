@@ -122,16 +122,17 @@ public class PlayerMovement : MonoBehaviour {
         //the character is offset from being centered, it's anchored to the bottom side of the player
         Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
         float playerXOffset = 0.5f;
+        int[] offsets = { 0, -1, 1 };
         //go between -1 and 1, used as a direction scale
-        for (int i = -1; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
             //offset based on i(direction)
-            float xOffset = i * playerXOffset;
+            float xOffset = offsets[i] * playerXOffset;
             //draw a debug ray to show off where the ray is
-            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp * 2);
+            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp * 2);
             //finally work out if the player is on the ground
-            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
+            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp, 2, ~(1<<m_playerLayerMask.value));
             //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
             //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
             if (m_isGrounded)
