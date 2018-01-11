@@ -77,14 +77,30 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-      
+
 
         //calc direction from key inputs
+        if (m_isGrounded)
+        {
+            if (m_player.m_currentLevel != null)
+            {
+                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
+                {
+                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+                    //go gravity flip
+                    if (keyGravityFlip)
+                    {
+                        FlipGravity();
+                        m_player.m_currentLevel.m_movesDone++;
+                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
 
-     
+                    }
+                }
+            }
+        }
         //do movement
-       
-        if(m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
+
+        if (m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
         {
             StartCoroutine(FlipPLayer(m_flipSpeed));
         }
@@ -123,24 +139,7 @@ public class PlayerMovement : MonoBehaviour {
                 break;
             }
         }
-        if (m_isGrounded)
-        {
-            if (m_player.m_currentLevel != null)
-            {
-                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
-                {
-                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
-                    //go gravity flip
-                    if (keyGravityFlip)
-                    {
-                        FlipGravity();
-                        m_player.m_currentLevel.m_movesDone++;
-                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
-
-                    }
-                }
-            }
-        }
+        
         //get key inputs
         bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
         bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
