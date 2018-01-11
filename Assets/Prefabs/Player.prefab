@@ -422,7 +422,7 @@ MonoBehaviour:
   m_moveSpeed: 0
   m_flipTime: 0.2
   m_acceleration: 8
-  m_decelleration: 16
+  m_decelleration: 24
   m_gravitySwitchAudio: {fileID: 8300000, guid: efe3972b36c166348b08bc61fb438133,
     type: 3}
   m_currentTime: 0

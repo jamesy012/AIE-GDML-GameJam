@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyPickupScript : MonoBehaviour
 {
     Collider playerCollider;
+    AudioClip keyPickup;
     
     private void Start()
     {
@@ -15,6 +16,7 @@ public class KeyPickupScript : MonoBehaviour
     {
         if (other == playerCollider)
         {
+            SoundManager.PlaySFX(keyPickup);
             GameObject.Find("Player").GetComponent<Player>().m_currentLevel.GetComponent<Level>().AddKey();
             this.gameObject.SetActive(false);
         }

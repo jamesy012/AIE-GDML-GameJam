@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222539200542495942}
   - component: {fileID: 114954104938680672}
   m_Layer: 5
-  m_Name: KeyImage(Clone) (2)
+  m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 114004806134243604}
   - component: {fileID: 114061296272184484}
   m_Layer: 5
-  m_Name: UI Thing
+  m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 222251684345963050}
   - component: {fileID: 114690143448713568}
   m_Layer: 5
-  m_Name: KeyImage(Clone)
+  m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 222382216381412236}
   - component: {fileID: 114945191660259268}
   m_Layer: 5
-  m_Name: KeyImage(Clone) (3)
+  m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 222810175834297298}
   - component: {fileID: 114711397985085718}
   m_Layer: 5
-  m_Name: KeyImage(Clone) (1)
+  m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1488,7 +1488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 815, y: 268.37}
+  m_AnchoredPosition: {x: 475, y: 454.15}
   m_SizeDelta: {x: 406.7, y: 200.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224063728737169348
