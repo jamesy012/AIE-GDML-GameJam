@@ -76,6 +76,7 @@ public class Level : MonoBehaviour {
         m_uiManager.SetupMoves(m_moves, m_moves);
         m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_movesDone = 0;
+        m_keys = 0;
         for (int i = 0; i < this.transform.childCount; i++)
         {
            if(this.transform.GetChild(i).GetComponent<KeyPickupScript>())
