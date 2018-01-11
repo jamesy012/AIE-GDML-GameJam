@@ -11,7 +11,7 @@ public class EndOfLevel : MonoBehaviour
     public Level newLevel;
     public bool changeBackgroundMusic;
     public AudioClip newBackGroundMusic;
-    public Level currentLevel;
+    public Level prevLevel;
     private int levelNumber;
     public Image m_levelStar;
     
@@ -41,49 +41,51 @@ public class EndOfLevel : MonoBehaviour
                 {
                     GameObject.Find("Player").GetComponent<Player>().m_currentLevel.m_door.m_animtor.SetTrigger("Close");
                 }
-                Debug.Log(currentLevel.m_movesDone);
-                if (currentLevel.m_movesDone == currentLevel.platStar)
+                if (prevLevel != null)
                 {
-                    Debug.Log("help");
-                   m_references.m_stars[3].SetActive(true);
-                    m_references.m_stars[2].SetActive(false);
-                    m_references.m_stars[1].SetActive(false);
-                    m_references.m_stars[0].SetActive(false);
-                    m_levelStar.sprite = m_references.m_starSprites[3];
-                    m_levelStar.color = Color.white;
-                    m_references.m_starAnim.SetTrigger("Go");
-                }
-                else if (currentLevel.m_movesDone <= currentLevel.goldStar && currentLevel.m_movesDone > currentLevel.platStar)
-                {
-                    Debug.Log("Gold");
-                    m_references.m_stars[3].SetActive(false);
-                    m_references.m_stars[2].SetActive(true);
-                    m_references.m_stars[1].SetActive(false);
-                    m_references.m_stars[0].SetActive(false);
-                    m_levelStar.sprite = m_references.m_starSprites[2];
-                    m_levelStar.color = Color.white;
-                    m_references.m_starAnim.SetTrigger("Go");
-                }
-                else if (currentLevel.m_movesDone <= currentLevel.silverStar && currentLevel.m_movesDone > currentLevel.goldStar)
-                {
-                    Debug.Log("Silver");
-                    m_references.m_stars[3].SetActive(false);
-                    m_references.m_stars[2].SetActive(false);
-                    m_references.m_stars[1].SetActive(true);
-                    m_references.m_stars[0].SetActive(false);
-                    m_levelStar.sprite = m_references.m_starSprites[1];
-                    m_levelStar.color = Color.white;
-                    m_references.m_starAnim.SetTrigger("Go");
-                }
-                else if(currentLevel.m_movesDone <= currentLevel.bronzeStar && currentLevel.m_movesDone > currentLevel.silverStar)
-                {
-                    m_references.m_stars[3].SetActive(false);
-                    m_references.m_stars[2].SetActive(false);
-                    m_references.m_stars[1].SetActive(false);
-                    m_references.m_stars[0].SetActive(true);
-                    m_levelStar.sprite = m_references.m_starSprites[0];
-                    m_levelStar.color = Color.white;
-                    m_references.m_starAnim.SetTrigger("Go");
+                    if (prevLevel.m_movesDone == prevLevel.platStar)
+                    {
+                        Debug.Log("help");
+                        m_references.m_stars[3].SetActive(true);
+                        m_references.m_stars[2].SetActive(false);
+                        m_references.m_stars[1].SetActive(false);
+                        m_references.m_stars[0].SetActive(false);
+                        m_levelStar.sprite = m_references.m_starSprites[3];
+                        m_levelStar.color = Color.white;
+                        m_references.m_starAnim.SetTrigger("Go");
+                    }
+                    else if (prevLevel.m_movesDone <= prevLevel.goldStar && prevLevel.m_movesDone > prevLevel.platStar)
+                    {
+                        Debug.Log("Gold");
+                        m_references.m_stars[3].SetActive(false);
+                        m_references.m_stars[2].SetActive(true);
+                        m_references.m_stars[1].SetActive(false);
+                        m_references.m_stars[0].SetActive(false);
+                        m_levelStar.sprite = m_references.m_starSprites[2];
+                        m_levelStar.color = Color.white;
+                        m_references.m_starAnim.SetTrigger("Go");
+                    }
+                    else if (prevLevel.m_movesDone <= prevLevel.silverStar && prevLevel.m_movesDone > prevLevel.goldStar)
+                    {
+                        Debug.Log("Silver");
+                        m_references.m_stars[3].SetActive(false);
+                        m_references.m_stars[2].SetActive(false);
+                        m_references.m_stars[1].SetActive(true);
+                        m_references.m_stars[0].SetActive(false);
+                        m_levelStar.sprite = m_references.m_starSprites[1];
+                        m_levelStar.color = Color.white;
+                        m_references.m_starAnim.SetTrigger("Go");
+                    }
+                    else if (prevLevel.m_movesDone <= prevLevel.bronzeStar && prevLevel.m_movesDone > prevLevel.silverStar)
+                    {
+                        m_references.m_stars[3].SetActive(false);
+                        m_references.m_stars[2].SetActive(false);
+                        m_references.m_stars[1].SetActive(false);
+                        m_references.m_stars[0].SetActive(true);
+                        m_levelStar.sprite = m_references.m_starSprites[0];
+                        m_levelStar.color = Color.white;
+                        m_references.m_starAnim.SetTrigger("Go");
+                    }
                 }
                 GameObject.Find("Player").GetComponent<Player>().m_currentLevel = newLevel;
                 newLevel.GetComponent<Level>().StartLevel();
