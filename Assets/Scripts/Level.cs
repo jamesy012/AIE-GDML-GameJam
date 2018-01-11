@@ -22,6 +22,12 @@ public class Level : MonoBehaviour {
     public Door m_door;
     public bool m_startFlipped;
     public Transform m_levelCamPos;
+    public int platStar;
+    public int goldStar;
+    public int silverStar;
+    public int bronzeStar;
+
+
 
     [System.Serializable]
     public struct GravityDirection {
