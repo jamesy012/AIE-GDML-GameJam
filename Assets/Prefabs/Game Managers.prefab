@@ -103,6 +103,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4587648963576976}
+  - component: {fileID: 114259376851118908}
   m_Layer: 0
   m_Name: Game Managers
   m_TagString: Untagged
@@ -723,6 +724,23 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114259376851118908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1429129282751492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b19d708ba96d9469d65b9e1dc86c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_levels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_player: {fileID: 0}
 --- !u!114 &114289081041684888
 MonoBehaviour:
   m_ObjectHideFlags: 1
