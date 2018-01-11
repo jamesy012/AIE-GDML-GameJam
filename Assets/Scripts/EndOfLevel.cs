@@ -15,7 +15,7 @@ public class EndOfLevel : MonoBehaviour
     public int silverStar;
     public int bronzeStar;
     public Level currentLevel;
-    public Animator m_starAnim;
+    private int levelNumber;
     public Image m_levelStar;
     
 
@@ -26,9 +26,9 @@ public class EndOfLevel : MonoBehaviour
         player = GameObject.Find("Player");
         playerCollider = player.GetComponent<Collider>();
         m_references = GameObject.Find("References").GetComponent<References>();
-      
-
-   
+        levelNumber = int.Parse(transform.parent.name.Remove(0,"Level".Length));
+        if(levelNumber != 1)
+            m_levelStar = GameObject.Find("StarPanel").transform.GetChild(levelNumber - 2).GetComponent<Image>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,7 +51,7 @@ public class EndOfLevel : MonoBehaviour
                     m_references.m_stars[0].SetActive(false);
                     m_levelStar.sprite = m_references.m_starSprites[3];
                     m_levelStar.color = Color.white;
-                    m_starAnim.SetTrigger("Go");
+                    m_references.m_starAnim.SetTrigger("Go");
                 }
                 else if (currentLevel.m_movesDone <= currentLevel.goldStar && currentLevel.m_movesDone > currentLevel.platStar)
                 {
@@ -62,7 +62,7 @@ public class EndOfLevel : MonoBehaviour
                     m_references.m_stars[0].SetActive(false);
                     m_levelStar.sprite = m_references.m_starSprites[2];
                     m_levelStar.color = Color.white;
-                    m_starAnim.SetTrigger("Go");
+                    m_references.m_starAnim.SetTrigger("Go");
                 }
                 else if (currentLevel.m_movesDone <= currentLevel.silverStar && currentLevel.m_movesDone > currentLevel.goldStar)
                 {
@@ -73,7 +73,7 @@ public class EndOfLevel : MonoBehaviour
                     m_references.m_stars[0].SetActive(false);
                     m_levelStar.sprite = m_references.m_starSprites[1];
                     m_levelStar.color = Color.white;
-                    m_starAnim.SetTrigger("Go");
+                    m_references.m_starAnim.SetTrigger("Go");
                 }
                 else if(currentLevel.m_movesDone <= currentLevel.bronzeStar && currentLevel.m_movesDone > currentLevel.silverStar)
                 {
@@ -83,7 +83,7 @@ public class EndOfLevel : MonoBehaviour
                     m_references.m_stars[0].SetActive(true);
                     m_levelStar.sprite = m_references.m_starSprites[0];
                     m_levelStar.color = Color.white;
-                    m_starAnim.SetTrigger("Go");
+                    m_references.m_starAnim.SetTrigger("Go");
                 }
                 GameObject.Find("Player").GetComponent<Player>().m_currentLevel = newLevel;
                 newLevel.GetComponent<Level>().StartLevel();

@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour {
     public Image m_movesBar;
     public Transform m_keyPanel;
     public GameObject m_keyImagePrefab;
-    public List<GameObject> m_keySprites;
+
 
     public List<Transform> m_objectsToDestroy;
 
@@ -21,10 +21,12 @@ public class UIManager : MonoBehaviour {
 
     public GameObject m_canvas;
 
+    public References m_references;
+
     // Use this for initialization
     void Start () {
 
-        
+        m_references = GameObject.Find("References").GetComponent<References>();
 	}
 	
 	// Update is called once per frame
@@ -36,7 +38,7 @@ public class UIManager : MonoBehaviour {
     {
         for(int i = 0; i < m_keyPanel.childCount; i ++)
         {
-            m_keySprites.Remove(m_keyPanel.GetChild(i).gameObject);
+            m_references.m_keySprites.Remove(m_keyPanel.GetChild(i).gameObject);
             Destroy(m_keyPanel.GetChild(i).gameObject);
             m_numberOfKeysActive = 0;
         }
@@ -46,15 +48,15 @@ public class UIManager : MonoBehaviour {
         {
             GameObject Key = Instantiate(m_keyImagePrefab, m_keyPanel) as GameObject;
             Key.GetComponent<Image>().sprite = m_keyOffImage;
-            m_keySprites.Add(Key);
+            m_references.m_keySprites.Add(Key);
         }
     }
 
     public void AddKey()
     {
-        if(m_numberOfKeysActive < m_keySprites.Count)
+        if(m_numberOfKeysActive < m_references.m_keySprites.Count)
         {
-            m_keySprites[m_numberOfKeysActive].GetComponent<Image>().sprite = m_keyOnImage;
+            m_references.m_keySprites[m_numberOfKeysActive].GetComponent<Image>().sprite = m_keyOnImage;
             m_numberOfKeysActive++;
         } 
     }
