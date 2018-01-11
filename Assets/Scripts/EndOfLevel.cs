@@ -30,6 +30,9 @@ public class EndOfLevel : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+		if (m_levelStar == null) {
+			return;
+		}
         if(m_active)
         {
             if (other == playerCollider)
