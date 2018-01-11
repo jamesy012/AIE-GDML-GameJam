@@ -11,9 +11,6 @@ public class EndOfLevel : MonoBehaviour
     public Level newLevel;
     public bool changeBackgroundMusic;
     public AudioClip newBackGroundMusic;
-    public int goldStar;
-    public int silverStar;
-    public int bronzeStar;
     public Level currentLevel;
     public Animator m_starAnim;
     public Image m_levelStar;
