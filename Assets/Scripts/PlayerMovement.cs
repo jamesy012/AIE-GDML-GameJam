@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Left/right movement
@@ -16,13 +17,13 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody m_rigidbody;
     private Animator m_animator;
     private Player m_player;
-    public Transform m_defaultPos, m_flippedPos;
 
     /// <summary>
     /// movement speed of the player
     /// </summary>
     public float m_moveSpeed = 100;
-    public float m_flipSpeed;
+    [FormerlySerializedAs("m_flipSpeed")]
+    public float m_flipTime;
     public int m_acceleration;
     public int m_decelleration;
     private int m_direction;
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
     private LayerMask m_playerLayerMask;
     public float m_currentTime;
     public Transform m_graphics;
-    public bool m_flipped;
+    //public bool m_flipped;
     public float m_maxSpeed;
 
 
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour {
             Debug.LogError("Please make the players layer to be 'Player'");
         }
 
-        Collider collider = GetComponent<Collider>();
+        Collider collider = m_graphics.GetComponent<Collider>();
         if (collider != null) {
             if (collider.material == null || collider.material.name.Contains("Default")) {
                 Debug.LogError("The player colldier should have the FrictionLess Physics Material");
@@ -111,8 +112,10 @@ public class PlayerMovement : MonoBehaviour {
 
         if (m_isGrounded)
         {
+
             if (m_player.m_currentLevel != null)
             {
+
                 if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
                 {
                     //go gravity flip
@@ -135,18 +138,7 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
         }
-        //do movement
-
-        if (m_graphics.transform.rotation == m_flippedPos.rotation && !m_flipped)
-        {
-            StartCoroutine(FlipPLayer(m_flipSpeed));
-        }
-        if (m_graphics.transform.rotation == m_defaultPos.rotation && m_flipped)
-        {
-            StartCoroutine(FlipPLayer(m_flipSpeed));
-        }
-        
-        
+        //do movement                                                               
 
     }
 
@@ -222,7 +214,11 @@ public class PlayerMovement : MonoBehaviour {
         //calc movement speed
         if (m_keyDirections[(int)moveLeft])
         {
-            m_graphics.transform.localScale = new Vector3(-1, 1, 1);
+            if (m_gravityDirection == Direction.KUp || m_gravityDirection == Direction.KLeft) {
+                m_graphics.transform.localScale = new Vector3(1, 1, 1);
+            } else {
+                m_graphics.transform.localScale = new Vector3(-1, 1, 1);
+            }
             if (m_moveSpeed > 0)
                 m_moveSpeed -= m_acceleration * 4 * Time.deltaTime;
             else if (m_moveSpeed <= 0)
@@ -230,7 +226,11 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (m_keyDirections[(int)moveRight])
         {
-            m_graphics.transform.localScale = new Vector3(1, 1, 1);
+            if (m_gravityDirection == Direction.KUp || m_gravityDirection == Direction.KLeft) {
+                m_graphics.transform.localScale = new Vector3(-1, 1, 1);
+            } else {
+                m_graphics.transform.localScale = new Vector3(1, 1, 1);
+            }
             if (m_moveSpeed < 0)
                 m_moveSpeed += m_acceleration * 4 * Time.deltaTime;
             else if (m_moveSpeed >= 0)
@@ -258,16 +258,11 @@ public class PlayerMovement : MonoBehaviour {
         m_moveSpeed = 0;
         if (m_player.m_currentLevel.m_startFlipped)
         {
-            m_graphics.transform.rotation = m_flippedPos.rotation;
-            m_graphics.transform.position = m_flippedPos.position;
-            m_flipped = true;
+            Debug.LogError("Unsupported atm");
         }
-        else
-        {
-            m_graphics.transform.rotation = m_defaultPos.rotation;
-            m_graphics.transform.position = m_defaultPos.position;
-            m_flipped = false;
-        }
+
+        m_graphics.transform.rotation = Quaternion.identity;
+        
 
     }
 
@@ -283,6 +278,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void FlipGravity(Direction a_direction) {
+
         float gravityValue = Mathf.Max(Mathf.Abs(Physics.gravity.x),Mathf.Max(Mathf.Abs(Physics.gravity.y), Mathf.Abs(Physics.gravity.z)));
         Vector3 gravity = Vector3.zero;
         switch (a_direction) {
@@ -300,30 +296,50 @@ public class PlayerMovement : MonoBehaviour {
                 break;
         }
         Physics.gravity = gravity;
-        StartCoroutine(FlipPLayer(m_flipSpeed));
-        m_flipped = !m_flipped;
+        StartCoroutine(FlipPLayer(m_flipTime, a_direction));
 
     }
 
-    IEnumerator FlipPLayer(float time)
+    IEnumerator FlipPLayer(float time, Direction a_Direction)
     {
         SoundManager.PlaySFX(m_gravitySwitchAudio);
         m_currentTime = 0;
+
+        Quaternion desiredRotation = Quaternion.identity;
+        Quaternion startingRotation = m_graphics.transform.rotation;
+
+        switch (a_Direction) {
+            case Direction.KLeft:
+                desiredRotation = Quaternion.Euler(new Vector3(0, 0, -90));
+                break;
+            case Direction.KRight:
+                desiredRotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                break;
+            case Direction.KUp:
+                desiredRotation = Quaternion.Euler(new Vector3(0, 0, 180));
+                break;
+            case Direction.KDown:
+                print(m_graphics.transform.rotation.eulerAngles.z);
+                    desiredRotation = Quaternion.Euler(new Vector3(0, 0, 0));                
+                break;
+        }
      
         while (m_currentTime < time)
         {
             m_currentTime += Time.deltaTime;
-            if(m_flipped)
-            {
-                m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_flippedPos.position, m_currentTime / time);
-                m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_flippedPos.rotation, m_currentTime / time);
-            }
-            else
-            {
-                m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_defaultPos.position, m_currentTime / time);
-                m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_defaultPos.rotation, m_currentTime / time);
-            }
-           
+            //if(m_flipped)
+            //{
+            //    m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_flippedPos.position, m_currentTime / time);
+            //    m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_flippedPos.rotation, m_currentTime / time);
+            //}
+            //else
+            //{
+            //    m_graphics.transform.position = Vector3.Lerp(m_graphics.transform.position, m_defaultPos.position, m_currentTime / time);
+            //    m_graphics.transform.rotation = Quaternion.Lerp(m_graphics.transform.rotation, m_defaultPos.rotation, m_currentTime / time);
+            //}
+
+            //print(desiredRotation.eulerAngles);
+            m_graphics.transform.rotation = Quaternion.Slerp(startingRotation, desiredRotation, m_currentTime / time);
             yield return null;
         }
     }
