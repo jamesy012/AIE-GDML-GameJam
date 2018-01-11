@@ -5,7 +5,8 @@ using UnityEngine;
 public class KillBoxScript : MonoBehaviour {
 
     public GameObject playerCollider;
-   
+    public AudioClip deathSound;
+
     private void Start()
     {
         playerCollider = GameObject.Find("PlayerCollider");
@@ -16,6 +17,7 @@ public class KillBoxScript : MonoBehaviour {
         if (other == playerCollider.GetComponent<Collider>())
         {
             playerCollider.GetComponentInParent<Player>().Restart();
+            SoundManager.PlaySFX(deathSound);
         }
     }
 }
