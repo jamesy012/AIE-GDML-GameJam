@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
     /// <summary>
     /// flag to check if the player is grounded
     /// </summary>
-    public bool m_isGrounded = false;
+    private bool m_isGrounded = false;
 
 
     /// <summary>
@@ -38,14 +38,24 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     public AudioClip m_gravitySwitchAudio;
 
-
-
     private LayerMask m_playerLayerMask;
     public float m_currentTime;
     public Transform m_graphics;
     public bool m_flipped;
     public float m_maxSpeed;
 
+    public enum Direction {
+        KLeft,
+        KRight,
+        KUp,
+        KDown
+    }
+
+    /// <summary>
+    /// which keys are held
+    /// use Direction enum as index
+    /// </summary>
+    private bool[] m_keyDirections = new bool[4];
 
     // Use this for initialization
     void Start() {
@@ -78,21 +88,26 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-
-        //calc direction from key inputs
         if (m_isGrounded)
         {
             if (m_player.m_currentLevel != null)
             {
                 if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
                 {
-                    bool keyGravityFlip = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.Space);
+                    bool keyGravityFlip = Input.GetKey(KeyCode.Space);
                     //go gravity flip
                     if (keyGravityFlip)
                     {
-                        FlipGravity();
-                        m_player.m_currentLevel.m_movesDone++;
-                        m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
+
+                        //0-3(inclusive) being left,right,up,down keys
+                        for (int i = 0; i < 4; i++) {
+                            if (m_keyDirections[i] && m_player.m_currentLevel.m_gravityDirection[i].m_allowDirection) {
+                                FlipGravity((Direction)i);
+                                m_player.m_currentLevel.m_movesDone++;
+                                m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
+                                break;
+                            }
+                        }
 
                     }
                 }
@@ -122,16 +137,17 @@ public class PlayerMovement : MonoBehaviour {
         //the character is offset from being centered, it's anchored to the bottom side of the player
         Vector3 playerCharacterOffset = new Vector3(0, Mathf.Clamp01(Physics.gravity.y) * 2, 0);
         float playerXOffset = 0.5f;
+        int[] offsets = { 0, -1, 1 };
         //go between -1 and 1, used as a direction scale
-        for (int i = -1; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             //NOTE: could probably combine playerCharacterOffset and xOffset into one vector
             //offset based on i(direction)
-            float xOffset = i * playerXOffset;
+            float xOffset = offsets[i] * playerXOffset;
             //draw a debug ray to show off where the ray is
-            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp * 2);
+            Debug.DrawRay(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp * 2);
             //finally work out if the player is on the ground
-            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, 0, 0), Vector3.up * isGravityUp, 2, ~m_playerLayerMask.value);
+            m_isGrounded |= Physics.Raycast(transform.position + playerCharacterOffset + new Vector3(xOffset, -0.5f * isGravityUp, 0), Vector3.up * isGravityUp, 2, ~(1<<m_playerLayerMask.value));
             //m_isGrounded = Physics.Raycast(transform.position + offset, Vector3.up * isGravityUp, out hit, 2, ~m_playerLayerMask.value);
             //ok player is grounded, no need to check if other raycasts are hitting the ground/foor
             if (m_isGrounded)
@@ -139,11 +155,15 @@ public class PlayerMovement : MonoBehaviour {
                 break;
             }
         }
-        
+
         //get key inputs
-        bool keyLeft = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
-        bool keyRight = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
-        if (keyLeft && (m_moveSpeed > -m_maxSpeed))
+        m_keyDirections[(int)Direction.KLeft] = Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow);
+        m_keyDirections[(int)Direction.KRight] = Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow);
+        m_keyDirections[(int)Direction.KUp] = Input.GetKey(KeyCode.W) | Input.GetKey(KeyCode.UpArrow);
+        m_keyDirections[(int)Direction.KDown] = Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.DownArrow);
+
+        //calc movement speed
+        if (m_keyDirections[(int)Direction.KLeft] && (m_moveSpeed > -m_maxSpeed))
         {
             m_graphics.transform.localScale = new Vector3(-1, 1, 1);
             if (m_moveSpeed > 0)
@@ -151,7 +171,7 @@ public class PlayerMovement : MonoBehaviour {
             else if (m_moveSpeed <= 0)
                 m_moveSpeed -= m_acceleration * Time.deltaTime;
         }
-        else if (keyRight)
+        else if (m_keyDirections[(int)Direction.KRight])
         {
             m_graphics.transform.localScale = new Vector3(1, 1, 1);
             if (m_moveSpeed < 0)
@@ -169,6 +189,7 @@ public class PlayerMovement : MonoBehaviour {
                 m_moveSpeed = 0;
         }
 
+        //clamp speed
         m_moveSpeed = Mathf.Clamp(m_moveSpeed, -m_maxSpeed, m_maxSpeed);
         SideMovement();
     }
@@ -200,9 +221,23 @@ public class PlayerMovement : MonoBehaviour {
         m_rigidbody.velocity = velocity;
     }
 
-    private void FlipGravity() {
-        Vector3 gravity = Physics.gravity;
-        gravity.y *= -1;
+    private void FlipGravity(Direction a_direction) {
+        float gravityValue = Mathf.Max(Mathf.Abs(Physics.gravity.x),Mathf.Max(Mathf.Abs(Physics.gravity.y), Mathf.Abs(Physics.gravity.z)));
+        Vector3 gravity = Vector3.zero;
+        switch (a_direction) {
+            case Direction.KDown:
+                gravity.y = -gravityValue;
+                break;
+            case Direction.KUp:
+                gravity.y = gravityValue;
+                break;
+            case Direction.KLeft:
+                gravity.x = -gravityValue;
+                break;
+            case Direction.KRight:
+                gravity.x = gravityValue;
+                break;
+        }
         Physics.gravity = gravity;
         StartCoroutine(FlipPLayer(m_flipSpeed));
         m_flipped = !m_flipped;
