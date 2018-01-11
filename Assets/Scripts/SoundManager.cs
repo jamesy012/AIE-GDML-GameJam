@@ -168,9 +168,12 @@ public class SoundManager : MonoBehaviour
 
     IEnumerator RemoveSFXSource(AudioSource sfxSource)
     {
-        yield return new WaitForSeconds(sfxSource.clip.length);
-        sfxSources.Remove(sfxSource);
-        Destroy(sfxSource);
+        if (sfxSource.clip != null)
+        {
+            yield return new WaitForSeconds(sfxSource.clip.length);
+            sfxSources.Remove(sfxSource);
+            Destroy(sfxSource);
+        }
     }
 
     IEnumerator RemoveSFXSourceFixedLength(AudioSource sfxSource, float length)

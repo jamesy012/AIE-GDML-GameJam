@@ -37,13 +37,12 @@ GameObject:
   - component: {fileID: 4325869805955642}
   - component: {fileID: 54384873688393984}
   - component: {fileID: 114302708595437900}
-  - component: {fileID: 114124038189208342}
   - component: {fileID: 136623126630296284}
   - component: {fileID: 95685232044974038}
   - component: {fileID: 65510937900025422}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,19 +394,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114124038189208342
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1315124761388322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b52ba7d1621f8ce45b6af8ec8e48f809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_player: {fileID: 0}
-  m_currentLevel: {fileID: 0}
 --- !u!114 &114302708595437900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -419,6 +405,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79bc942904acbf479945e870611c05d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_levelManager: {fileID: 0}
+  m_coreGameManager: {fileID: 0}
   m_moveSpeed: 0
   m_flipTime: 0.2
   m_acceleration: 8

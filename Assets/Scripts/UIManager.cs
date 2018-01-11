@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour {
     public GameObject m_canvas;
 
     public References m_references;
+    public List<GameObject> m_keySprites;
 
     // Use this for initialization
     void Start () {
@@ -38,25 +39,24 @@ public class UIManager : MonoBehaviour {
     {
         for(int i = 0; i < m_keyPanel.childCount; i ++)
         {
-            m_references.m_keySprites.Remove(m_keyPanel.GetChild(i).gameObject);
+            m_keySprites.Remove(m_keyPanel.GetChild(i).gameObject);
             Destroy(m_keyPanel.GetChild(i).gameObject);
             m_numberOfKeysActive = 0;
         }
         
-   
         for (int i = 0; i < a_numberOfKeys; i++)
         {
             GameObject Key = Instantiate(m_keyImagePrefab, m_keyPanel) as GameObject;
             Key.GetComponent<Image>().sprite = m_keyOffImage;
-            m_references.m_keySprites.Add(Key);
+           m_keySprites.Add(Key);
         }
     }
 
     public void AddKey()
     {
-        if(m_numberOfKeysActive < m_references.m_keySprites.Count)
+        if(m_numberOfKeysActive < m_keySprites.Count)
         {
-            m_references.m_keySprites[m_numberOfKeysActive].GetComponent<Image>().sprite = m_keyOnImage;
+           m_keySprites[m_numberOfKeysActive].GetComponent<Image>().sprite = m_keyOnImage;
             m_numberOfKeysActive++;
         } 
     }

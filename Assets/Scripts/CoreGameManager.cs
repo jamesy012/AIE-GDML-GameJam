@@ -17,12 +17,10 @@ public class CoreGameManager : MonoBehaviour {
 		
 	}
 
-   
     public void LoadLevel(string a_level)
     {
         SceneManager.LoadScene(a_level);
         Physics.gravity = new Vector3(0, -70f, 0);
-
     }
 
     public void QuitGame()

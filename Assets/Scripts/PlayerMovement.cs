@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private Rigidbody m_rigidbody;
     private Animator m_animator;
-    private Player m_player;
-
+    public LevelManager m_levelManager;
+    public CoreGameManager m_coreGameManager;
     /// <summary>
     /// movement speed of the player
     /// </summary>
@@ -69,8 +69,8 @@ public class PlayerMovement : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
         m_playerLayerMask = LayerMask.NameToLayer("Player");
         m_animator = GetComponent<Animator>();
-        m_player = GetComponent<Player>();
-
+        m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
+        m_coreGameManager = GameObject.FindWithTag("CoreGameManager").GetComponent<CoreGameManager>();
         if(gameObject.layer != m_playerLayerMask) {
             Debug.LogError("Please make the players layer to be 'Player'");
         }
@@ -94,9 +94,14 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (m_levelManager == null)
+        {
+            Debug.LogWarning("The level Manager has not been assigned, Tag the level manager with the LevelManager tag");
+        }
+
         //bool leftRightGravity = Physics.gravity.y < 0.5f && Physics.gravity.y > -0.5f;
         if (Physics.gravity.y > 0.5f) {
-            m_gravityDirection = Direction.KUp;
+        m_gravityDirection = Direction.KUp;
         } else if (Physics.gravity.y < -0.5f) {
             m_gravityDirection = Direction.KDown;
         } else if(Physics.gravity.x > 0.5f) {
@@ -113,48 +118,45 @@ public class PlayerMovement : MonoBehaviour {
 
         if (m_isGrounded)
         {
-
-            if (m_player.m_currentLevel != null)
+            if (!m_levelManager.m_currentLevel.m_levelFailed)
             {
-
-                if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
+                //go gravity flip
+                if (keyGravityFlipY | keyGravityFlipX)
                 {
-                    //go gravity flip
-                    if (keyGravityFlipY | keyGravityFlipX)
+                    if (!m_didUseGravityThisPress)
                     {
-                        if (!m_didUseGravityThisPress) {
-                            //0-3(inclusive) being left,right,up,down keys
-                            int offset = 0;
-                            //because up and down are 2/3 in the array
-                            if (keyGravityFlipY) {
-                                offset = 2;
-                            }
-                            for (int i = 0; i < 2; i++) {
-                                int index = i + offset;
-                                if (m_keyDirections[index] && m_player.m_currentLevel.m_gravityDirection[index].m_allowDirection) {
-                                    m_didUseGravityThisPress = true;
-                                    FlipGravity((Direction)index);
-                                    m_player.m_currentLevel.m_movesDone++;
-                                    m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
-                                    break;
-                                }
-                            }
+                        //0-3(inclusive) being left,right,up,down keys
+                        int offset = 0;
+                        //because up and down are 2/3 in the array
+                        if (keyGravityFlipY)
+                        {
+                            offset = 2;
                         }
+                        for (int i = 0; i < 2; i++)
+                        {
+                            int index = i + offset;
+                            if (m_keyDirections[index] && m_levelManager.m_currentLevel.m_gravityDirection[index].m_allowDirection)
+                            {
+                                m_didUseGravityThisPress = true;
+                                FlipGravity((Direction)index);
+                                 m_levelManager.m_currentLevel.m_movesDone++;
+                                 m_levelManager.m_uiManager.SetupMoves(m_levelManager.m_currentLevel.m_movesAvailable - m_levelManager.m_currentLevel.m_movesDone, m_levelManager.m_currentLevel.m_movesAvailable);
+                                 break;
+                             }
+                        }
+                    }
 
-                    } 
-                }
-            } else {
-                Debug.LogWarning("Player does not have a current Level, no gravity shifts will happen");
+                } 
             }
+           
         }
-        //do movement                                                               
-
     }
 
     public void FixedUpdate()
     {
         //calc grounded
-        m_isGrounded = false;//reset
+        m_isGrounded = false;
+        //reset
         //work out which way the gravity is going
         float playerOffset = 0.5f;
         int[] offsets = { 0, -1, 1 };
@@ -265,7 +267,7 @@ public class PlayerMovement : MonoBehaviour {
         
         StopAllCoroutines();
         m_moveSpeed = 0;
-        if (m_player.m_currentLevel.m_startFlipped)
+        if (m_levelManager.m_currentLevel.m_startFlipped)
         {
             Debug.LogError("Unsupported atm");
         }

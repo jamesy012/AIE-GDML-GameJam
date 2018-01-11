@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Key
+  - Fire
+  - Level
+  - Door
+  - SpawnPoint
+  - StartTrigger
+  - LevelCamera
+  - UIManager
+  - LevelManager
+  - CoreGameManager
   layers:
   - Default
   - TransparentFX

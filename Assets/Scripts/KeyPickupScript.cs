@@ -6,18 +6,19 @@ public class KeyPickupScript : MonoBehaviour
 {
     Collider playerCollider;
     AudioClip keyPickup;
+    public LevelManager m_levelManager;
     
     private void Start()
     {
-        playerCollider = GameObject.Find("PlayerTrigger").GetComponent<Collider>();
+        m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other == playerCollider)
+        if (other.CompareTag("Player"))
         {
             SoundManager.PlaySFX(keyPickup);
-            GameObject.Find("Player").GetComponent<Player>().m_currentLevel.GetComponent<Level>().AddKey();
+            m_levelManager.AddKey();
             this.gameObject.SetActive(false);
         }
         

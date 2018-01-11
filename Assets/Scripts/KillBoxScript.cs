@@ -6,17 +6,18 @@ public class KillBoxScript : MonoBehaviour {
 
     public GameObject playerCollider;
     public AudioClip deathSound;
+    public LevelManager m_levelManager;
 
     private void Start()
     {
-        playerCollider = GameObject.Find("PlayerTrigger");
+        m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other == playerCollider.GetComponent<Collider>())
+        if (other.CompareTag("Player"))
         {
-            playerCollider.GetComponentInParent<Player>().Restart();
+            m_levelManager.RestartLevel();
             SoundManager.PlaySFX(deathSound);
         }
     }
