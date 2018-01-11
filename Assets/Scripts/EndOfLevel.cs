@@ -24,15 +24,16 @@ public class EndOfLevel : MonoBehaviour
         playerCollider = player.GetComponent<Collider>();
         m_references = GameObject.Find("References").GetComponent<References>();
         levelNumber = int.Parse(transform.parent.name.Remove(0,"Level".Length));
-        if(levelNumber != 1)
+        if (levelNumber != 1)
+        {
             m_levelStar = GameObject.Find("StarPanel").transform.GetChild(levelNumber - 2).GetComponent<Image>();
+            prevLevel = GameObject.Find("Level" + (levelNumber - 1)).GetComponent<Level>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-		if (m_levelStar == null) {
-			return;
-		}
+		
         if(m_active)
         {
             if (other == playerCollider)
