@@ -105,8 +105,9 @@ public class PlayerMovement : MonoBehaviour {
             m_gravityDirection = Direction.KLeft;
         }
 
-        bool keyGravityFlip = Input.GetKey(KeyCode.Space);
-        if(!keyGravityFlip) {
+        bool keyGravityFlipY = Input.GetKey(KeyCode.Space);
+        bool keyGravityFlipX = Input.GetKey(KeyCode.LeftShift);
+        if (!(keyGravityFlipY | keyGravityFlipX)) {
             m_didUseGravityThisPress = false;
         }
 
@@ -119,14 +120,20 @@ public class PlayerMovement : MonoBehaviour {
                 if (m_player.m_currentLevel.m_movesDone < m_player.m_currentLevel.m_moves)
                 {
                     //go gravity flip
-                    if (keyGravityFlip)
+                    if (keyGravityFlipY | keyGravityFlipX)
                     {
                         if (!m_didUseGravityThisPress) {
                             //0-3(inclusive) being left,right,up,down keys
-                            for (int i = 0; i < 4; i++) {
-                                if (m_keyDirections[i] && m_player.m_currentLevel.m_gravityDirection[i].m_allowDirection) {
+                            int offset = 0;
+                            //because up and down are 2/3 in the array
+                            if (keyGravityFlipY) {
+                                offset = 2;
+                            }
+                            for (int i = 0; i < 2; i++) {
+                                int index = i + offset;
+                                if (m_keyDirections[index] && m_player.m_currentLevel.m_gravityDirection[index].m_allowDirection) {
                                     m_didUseGravityThisPress = true;
-                                    FlipGravity((Direction)i);
+                                    FlipGravity((Direction)index);
                                     m_player.m_currentLevel.m_movesDone++;
                                     m_player.m_currentLevel.m_uiManager.SetupMoves(m_player.m_currentLevel.m_moves - m_player.m_currentLevel.m_movesDone, m_player.m_currentLevel.m_moves);
                                     break;
@@ -136,6 +143,8 @@ public class PlayerMovement : MonoBehaviour {
 
                     } 
                 }
+            } else {
+                Debug.LogWarning("Player does not have a current Level, no gravity shifts will happen");
             }
         }
         //do movement                                                               
@@ -319,8 +328,7 @@ public class PlayerMovement : MonoBehaviour {
                 desiredRotation = Quaternion.Euler(new Vector3(0, 0, 180));
                 break;
             case Direction.KDown:
-                print(m_graphics.transform.rotation.eulerAngles.z);
-                    desiredRotation = Quaternion.Euler(new Vector3(0, 0, 0));                
+                desiredRotation = Quaternion.Euler(new Vector3(0, 0, 0));                
                 break;
         }
      

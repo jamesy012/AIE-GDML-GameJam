@@ -41,9 +41,6 @@ public class Level : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        for (int i = 0; i < m_gravityDirection.Length; i++) {
-            m_gravityDirection[i].m_allowDirection = true;
-        }
 
         m_uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         m_player = GameObject.Find("Player");
