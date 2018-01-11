@@ -34,10 +34,25 @@ public class EndOfLevel : MonoBehaviour
                     GameObject.Find("Player").GetComponent<Player>().m_currentLevel.m_door.m_animtor.SetTrigger("Close");
                 }
 
-                //if (currentLevel.m_movesDone <= currentLevel)
-                //{
-                //    //give player gold star
-                //}
+                if (currentLevel.m_movesDone <= currentLevel.platStar)
+                {
+                    //give plat star
+                }
+
+                if (currentLevel.m_movesDone <= goldStar && currentLevel.m_movesDone > currentLevel.platStar)
+                {
+                    //give gold star
+                }
+
+                if (currentLevel.m_movesDone <= silverStar && currentLevel.m_movesDone > currentLevel.goldStar)
+                {
+                    //give silver star
+                }
+                else
+                {
+                    //give bronze star
+                }
+
                 GameObject.Find("Player").GetComponent<Player>().m_currentLevel = newLevel;
                 newLevel.GetComponent<Level>().StartLevel();
                 m_active = false;
