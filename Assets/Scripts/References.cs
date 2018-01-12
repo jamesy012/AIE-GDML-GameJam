@@ -7,7 +7,7 @@ public class References : MonoBehaviour {
     public List<Sprite> m_starSprites;
     public List<GameObject> m_stars;
     public Animator m_starAnim;
-    public List<GameObject> m_keySprites;
+
 
     // Use this for initialization
     void Start () {
