@@ -37,13 +37,16 @@ public class LevelManager : MonoBehaviour {
         m_camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         m_currentLevel = m_levels[0];
         SetupLevel();
-	}
-	
+
+    }
+
     public void SetupLevel()
     {
         m_uiManager.SetupKeys(m_currentLevel.m_keysInLevel);
         m_uiManager.SetupMoves(m_currentLevel.m_movesAvailable, m_currentLevel.m_movesAvailable);
         StartCoroutine(PanCamera(3));
+        ResetGravity();
+
     }
 
     public void CompleteLevel()
@@ -86,6 +89,8 @@ public class LevelManager : MonoBehaviour {
            
         }
         m_previousLevel.CloseDoor();
+
+        ResetGravity();
     }
 
     public void RestartLevel() {
@@ -99,10 +104,10 @@ public class LevelManager : MonoBehaviour {
         m_player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_currentLevel.m_movesDone = 0;
         m_currentLevel.m_keysCollected = 0;
-        m_player.ResetVariables();
 
         m_currentLevel.ResetKeys();
 
+        ResetGravity();
     }
 
     public void AddKey()
@@ -113,6 +118,31 @@ public class LevelManager : MonoBehaviour {
         {
            m_currentLevel.OpenDoor();
         }
+    }
+
+    private void ResetGravity() {
+        setGravityDirection(m_currentLevel.m_startingDirection);
+        m_player.ResetVariables();
+    }
+
+    public void setGravityDirection(PlayerMovement.Direction a_direction) {
+        float gravityValue = Mathf.Max(Mathf.Abs(Physics.gravity.x), Mathf.Max(Mathf.Abs(Physics.gravity.y), Mathf.Abs(Physics.gravity.z)));
+        Vector3 gravity = Vector3.zero;
+        switch (a_direction) {
+            case PlayerMovement.Direction.KDown:
+                gravity.y = -gravityValue;
+                break;
+            case PlayerMovement.Direction.KUp:
+                gravity.y = gravityValue;
+                break;
+            case PlayerMovement.Direction.KLeft:
+                gravity.x = -gravityValue;
+                break;
+            case PlayerMovement.Direction.KRight:
+                gravity.x = gravityValue;
+                break;
+        }
+        Physics.gravity = gravity;
     }
 
 
