@@ -44,22 +44,42 @@ public class UIManager : MonoBehaviour {
                     Debug.Log("Plat");
                     a_level.m_levelStar.sprite = m_references.m_starSprites[3];
                     a_level.m_levelStar.color = Color.white;
+                    m_references.m_starAnim.SetTrigger("Go");
+                    m_references.m_stars[3].SetActive(true);
+                    m_references.m_stars[2].SetActive(false);
+                    m_references.m_stars[1].SetActive(false);
+                    m_references.m_stars[0].SetActive(false);
                     break;
 
                 case Level.StarAwarded.Gold:
                     Debug.Log("Gold");
                     a_level.m_levelStar.sprite = m_references.m_starSprites[2];
                     a_level.m_levelStar.color = Color.white;
+                    m_references.m_starAnim.SetTrigger("Go");
+                    m_references.m_stars[3].SetActive(false);
+                    m_references.m_stars[2].SetActive(true);
+                    m_references.m_stars[1].SetActive(false);
+                    m_references.m_stars[0].SetActive(false);
                     break;
 
                 case Level.StarAwarded.Silver:
                     a_level.m_levelStar.sprite = m_references.m_starSprites[1];
                     a_level.m_levelStar.color = Color.white;
+                    m_references.m_starAnim.SetTrigger("Go");
+                    m_references.m_stars[3].SetActive(false);
+                    m_references.m_stars[2].SetActive(false);
+                    m_references.m_stars[1].SetActive(true);
+                    m_references.m_stars[0].SetActive(false);
                     break;
 
                 case Level.StarAwarded.Bronze:
                     a_level.m_levelStar.sprite = m_references.m_starSprites[0];
                     a_level.m_levelStar.color = Color.white;
+                    m_references.m_starAnim.SetTrigger("Go");
+                    m_references.m_stars[3].SetActive(false);
+                    m_references.m_stars[2].SetActive(false);
+                    m_references.m_stars[1].SetActive(false);
+                    m_references.m_stars[0].SetActive(true);
                     break;
             }
         } else {
