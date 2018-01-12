@@ -12,6 +12,7 @@ public class KillBoxScript : MonoBehaviour {
     private void Start()
     {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
+        playerDeathParticle = Resources.Load<ParticleSystem>("Death");
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,7 +22,7 @@ public class KillBoxScript : MonoBehaviour {
             if (playerDeathParticle != null)
             {
                 playerPosition = GameObject.Find("Player").transform;
-                Instantiate(playerDeathParticle, new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z), playerPosition.transform.rotation);
+                Instantiate(playerDeathParticle, playerPosition.transform.position, playerPosition.transform.rotation);
             }
             m_levelManager.RestartLevel();
             SoundManager.PlaySFX(deathSound);
