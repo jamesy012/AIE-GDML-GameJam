@@ -35,6 +35,37 @@ public class UIManager : MonoBehaviour {
 		
     }
 
+
+    public void DisplayStar(Level.StarAwarded a_starAwarded, Level a_level)
+    {
+        switch (a_starAwarded)
+        {
+            case Level.StarAwarded.Platinum:
+                Debug.Log("Plat");
+                a_level.m_levelStar.sprite = m_references.m_starSprites[3];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Gold:
+                Debug.Log("Gold");
+                a_level.m_levelStar.sprite = m_references.m_starSprites[2];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Silver:
+                a_level.m_levelStar.sprite = m_references.m_starSprites[1];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Bronze:
+                a_level.m_levelStar.sprite = m_references.m_starSprites[0];
+                a_level.m_levelStar.color = Color.white;
+                break;
+        }
+     
+
+    }
+
     public void SetupKeys(int a_numberOfKeys)
     {
         for(int i = 0; i < m_keyPanel.childCount; i ++)

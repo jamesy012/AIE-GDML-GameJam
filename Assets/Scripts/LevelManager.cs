@@ -26,6 +26,11 @@ public class LevelManager : MonoBehaviour {
         {
             m_levels.Add(obj.GetComponent<Level>());
         }
+        for(int i = 0; i < m_levels.Count; i++)
+        {
+            m_levels[i].m_levelNumber = i;
+        
+        }
         m_defaultGravity = Physics.gravity;
         m_player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         m_uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();
@@ -46,18 +51,26 @@ public class LevelManager : MonoBehaviour {
         if (m_currentLevel.m_movesDone == m_currentLevel.m_platinumStarMoves)
         {
             Debug.Log("Platinum");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Platinum;
+            m_uiManager.DisplayStar(m_currentLevel.m_starAwarded, m_currentLevel);
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_goldStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_platinumStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_goldStarMoves)
         {
             Debug.Log("Gold");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Gold;
+            m_uiManager.DisplayStar(m_currentLevel.m_starAwarded, m_currentLevel);
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_silverStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_goldStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_silverStarMoves)
         {
             Debug.Log("Silver");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Silver;
+            m_uiManager.DisplayStar(m_currentLevel.m_starAwarded, m_currentLevel);
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_bronzeStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_silverStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_bronzeStarMoves)
         {
             Debug.Log("Bronze");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Bronze;
+            m_uiManager.DisplayStar(m_currentLevel.m_starAwarded, m_currentLevel);
         }
         m_previousLevel = m_currentLevel;
         for(int i = 0; i < m_levels.Count; i++)

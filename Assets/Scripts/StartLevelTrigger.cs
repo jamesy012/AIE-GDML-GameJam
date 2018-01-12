@@ -32,7 +32,6 @@ public class StartLevelTrigger : MonoBehaviour
             {
                 m_levelManager.CompleteLevel();
                 m_levelManager.SetupLevel();
-                
                 m_active = false;
             }
             if (changeBackgroundMusic)

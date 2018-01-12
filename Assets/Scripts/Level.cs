@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Level : MonoBehaviour {
@@ -25,13 +26,25 @@ public class Level : MonoBehaviour {
     public Transform m_levelCamPos;
     private Door m_door;
     private LevelManager m_levelManager;
-  
+
+    public AudioClip m_doorOpenSFX;
 
     public int m_platinumStarMoves;
     public int m_goldStarMoves;
     public int m_silverStarMoves;
     public int m_bronzeStarMoves;
 
+    public int m_levelNumber;
+    public Image m_levelStar;
+
+    public enum StarAwarded
+    {
+        Bronze,
+        Silver,
+        Gold,
+        Platinum
+    }
+    public StarAwarded m_starAwarded;
 
     [System.Serializable]
     public struct GravityDirection {
@@ -49,9 +62,11 @@ public class Level : MonoBehaviour {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
         m_door = GetComponentInChildren<Door>();
         m_ListOfKeys = GetComponentsInChildren<KeyPickupScript>();
+        m_levelStar = GameObject.FindWithTag("ScoreHolder").transform.GetChild(m_levelNumber).GetComponent<Image>();
     }
 
     public void OpenDoor() {
+        SoundManager.PlaySFX(m_doorOpenSFX);
         m_door.m_animtor.SetTrigger("Open");
     }
 
