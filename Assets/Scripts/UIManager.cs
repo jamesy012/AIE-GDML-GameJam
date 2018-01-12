@@ -36,13 +36,33 @@ public class UIManager : MonoBehaviour {
     }
 
 
-    public void DisplayStar(string a_star, Level a_level)
+    public void DisplayStar(Level.StarAwarded a_starAwarded, Level a_level)
     {
-        switch (a_star)
+        switch (a_starAwarded)
         {
-            case " Platinum":
+            case Level.StarAwarded.Platinum:
+                Debug.Log("Plat");
+                a_level.m_levelStar.sprite = m_references.m_starSprites[3];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Gold:
+                Debug.Log("Gold");
+                a_level.m_levelStar.sprite = m_references.m_starSprites[2];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Silver:
+                a_level.m_levelStar.sprite = m_references.m_starSprites[1];
+                a_level.m_levelStar.color = Color.white;
+                break;
+
+            case Level.StarAwarded.Bronze:
+                a_level.m_levelStar.sprite = m_references.m_starSprites[0];
+                a_level.m_levelStar.color = Color.white;
                 break;
         }
+     
 
     }
 

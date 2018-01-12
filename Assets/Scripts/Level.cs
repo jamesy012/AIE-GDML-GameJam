@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Level : MonoBehaviour {
@@ -33,6 +34,7 @@ public class Level : MonoBehaviour {
     public int m_bronzeStarMoves;
 
     public int m_levelNumber;
+    public Image m_levelStar;
 
     public enum StarAwarded
     {
@@ -59,6 +61,7 @@ public class Level : MonoBehaviour {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
         m_door = GetComponentInChildren<Door>();
         m_ListOfKeys = GetComponentsInChildren<KeyPickupScript>();
+        m_levelStar = GameObject.FindWithTag("ScoreHolder").transform.GetChild(m_levelNumber).GetComponent<Image>();
     }
 
     public void OpenDoor() {
