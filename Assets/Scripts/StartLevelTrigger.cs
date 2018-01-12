@@ -37,7 +37,7 @@ public class StartLevelTrigger : MonoBehaviour
             if (changeBackgroundMusic)
             {
                 SoundManager.StopBGM(false, 0);
-                SoundManager.PlayBGM(newBackGroundMusic, true, 10.0f);
+                SoundManager.PlayBGM(newBackGroundMusic, true, 5.0f);
             }
 
         }
