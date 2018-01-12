@@ -47475,10 +47475,10 @@ MonoBehaviour:
   m_levelFailed: 0
   m_respawnPoint: {fileID: 4309590731799528}
   m_levelCamPos: {fileID: 4798624661991948}
-  m_platinumStarMoves: 0
-  m_goldStarMoves: 0
-  m_silverStarMoves: 0
-  m_bronzeStarMoves: 0
+  m_platinumStarMoves: 5
+  m_goldStarMoves: 6
+  m_silverStarMoves: 7
+  m_bronzeStarMoves: 8
   m_gravityDirection:
   - m_name: Left
     m_allowDirection: 0

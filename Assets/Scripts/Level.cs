@@ -40,20 +40,30 @@ public class Level : MonoBehaviour {
         public bool m_allowDirection;
     }
 
-    public GravityDirection[] m_gravityDirection = new GravityDirection[4]; 
+    public GravityDirection[] m_gravityDirection = new GravityDirection[4];
+
+    private KeyPickupScript[] m_ListOfKeys;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
-        m_door = m_levelManager.m_currentLevel.GetComponentInChildren<Door>();
+        m_door = GetComponentInChildren<Door>();
+        m_ListOfKeys = GetComponentsInChildren<KeyPickupScript>();
     }
-	
-    public void OpenDoor()
-    {
+
+    public void OpenDoor() {
         m_door.m_animtor.SetTrigger("Open");
     }
 
+    public void CloseDoor() {
+        m_door.m_animtor.SetTrigger("Close");
+    }
+
+    public void ResetKeys() {
+        foreach (KeyPickupScript key in m_ListOfKeys) {
+            key.gameObject.SetActive(true);
+        }
+    }
 
     private void OnValidate() {
         for(int i = 0; i < m_gravityDirection.Length; i++) {

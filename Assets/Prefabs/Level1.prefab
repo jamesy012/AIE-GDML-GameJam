@@ -45368,17 +45368,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_keysInLevel: 1
-  m_movesAvailable: 10
+  m_movesAvailable: 8
   m_keysCollected: 0
   m_movesDone: 0
   m_startFlipped: 0
   m_levelFailed: 0
   m_respawnPoint: {fileID: 4764032129377236}
   m_levelCamPos: {fileID: 4177678213192344}
-  m_platinumStarMoves: 5
-  m_goldStarMoves: 7
-  m_silverStarMoves: 8
-  m_bronzeStarMoves: 10
+  m_platinumStarMoves: 4
+  m_goldStarMoves: 5
+  m_silverStarMoves: 6
+  m_bronzeStarMoves: 7
   m_gravityDirection:
   - m_name: Left
     m_allowDirection: 0

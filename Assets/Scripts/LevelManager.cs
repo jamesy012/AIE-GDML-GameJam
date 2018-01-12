@@ -72,10 +72,13 @@ public class LevelManager : MonoBehaviour {
             }
            
         }
+        m_previousLevel.CloseDoor();
     }
 
-    public void RestartLevel()
-    {
+    public void RestartLevel() {
+        if (m_currentLevel.m_keysCollected == m_currentLevel.m_keysInLevel) {
+            m_currentLevel.CloseDoor();
+        }
         m_player.transform.position = m_currentLevel.m_respawnPoint.transform.position;
         Physics.gravity = m_defaultGravity;
         m_uiManager.SetupKeys(m_currentLevel.m_keysInLevel);
@@ -84,10 +87,9 @@ public class LevelManager : MonoBehaviour {
         m_currentLevel.m_movesDone = 0;
         m_currentLevel.m_keysCollected = 0;
         m_player.ResetVariables();
-        foreach(KeyPickupScript key in GetComponentsInChildren<KeyPickupScript>())
-        {
-            key.gameObject.SetActive(true);
-        }
+
+        m_currentLevel.ResetKeys();
+
     }
 
     public void AddKey()
