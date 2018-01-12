@@ -14,33 +14,13 @@ public class SkipLevel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            m_levelManager.m_currentLevel = m_levelManager.m_levels[0];
-            m_levelManager.SetupLevel();
-            m_player.transform.position = m_levelManager.m_currentLevel.m_respawnPoint.transform.position;
-            m_player.ResetVariables();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            m_levelManager.m_currentLevel = m_levelManager.m_levels[1];
-            m_levelManager.SetupLevel();
-            m_player.transform.position = m_levelManager.m_currentLevel.m_respawnPoint.transform.position;
-            m_player.ResetVariables();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            m_levelManager.m_currentLevel = m_levelManager.m_levels[2];
-            m_levelManager.SetupLevel();
-            m_player.transform.position = m_levelManager.m_currentLevel.m_respawnPoint.transform.position;
-            m_player.ResetVariables();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            m_levelManager.m_currentLevel = m_levelManager.m_levels[3];
-            m_levelManager.SetupLevel();
-            m_player.transform.position = m_levelManager.m_currentLevel.m_respawnPoint.transform.position;
-            m_player.ResetVariables();  
+        for(int i = 0; i < Mathf.Min(9, m_levelManager.m_levels.Count); i++) {
+            if (Input.GetKeyDown(KeyCode.Alpha1+i)) {
+                m_levelManager.m_currentLevel = m_levelManager.m_levels[i];
+                m_levelManager.SetupLevel();
+                m_player.transform.position = m_levelManager.m_currentLevel.m_respawnPoint.transform.position;
+                m_player.ResetVariables();
+            }
         }
     }
 }
