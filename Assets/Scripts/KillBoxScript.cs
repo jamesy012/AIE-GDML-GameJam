@@ -13,6 +13,7 @@ public class KillBoxScript : MonoBehaviour {
     {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
         playerDeathParticle = Resources.Load<ParticleSystem>("Death");
+        deathSound = Resources.Load<AudioClip>("Player Death Sound");
     }
 
     void OnTriggerEnter(Collider other)

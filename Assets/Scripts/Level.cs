@@ -63,6 +63,7 @@ public class Level : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        m_doorOpenSFX = Resources.Load<AudioClip>("Door Unlock Sound");
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
         m_door = GetComponentInChildren<Door>();
         m_ListOfKeys = GetComponentsInChildren<KeyPickupScript>();
