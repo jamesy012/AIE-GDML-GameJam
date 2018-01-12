@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private bool m_isGrounded = false;
 
+    public bool m_allowOnlyOneGravityShiftPerPress = false;
+
 
     /// <summary>
     /// Sound effect storage
@@ -62,6 +64,9 @@ public class PlayerMovement : MonoBehaviour {
     /// </summary>
     private bool[] m_keyDirections = new bool[4];
 
+    /// <summary>
+    /// what direction is the gravity currently going
+    /// </summary>
     private Direction m_gravityDirection;
 
     // Use this for initialization
@@ -99,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
             Debug.LogWarning("The level Manager has not been assigned, Tag the level manager with the LevelManager tag");
         }
 
-        //bool leftRightGravity = Physics.gravity.y < 0.5f && Physics.gravity.y > -0.5f;
+        //calc the direction of the gravity
         if (Physics.gravity.y > 0.5f) {
         m_gravityDirection = Direction.KUp;
         } else if (Physics.gravity.y < -0.5f) {
@@ -110,9 +115,16 @@ public class PlayerMovement : MonoBehaviour {
             m_gravityDirection = Direction.KLeft;
         }
 
+        //gravity changer key inputs
         bool keyGravityFlipY = Input.GetKey(KeyCode.Space);
         bool keyGravityFlipX = Input.GetKey(KeyCode.LeftShift);
-        if (!(keyGravityFlipY | keyGravityFlipX)) {
+
+        if (m_allowOnlyOneGravityShiftPerPress) {
+            //are both keys released?
+            if (!(keyGravityFlipY | keyGravityFlipX)) {
+                m_didUseGravityThisPress = false;
+            }
+        } else {
             m_didUseGravityThisPress = false;
         }
 
@@ -137,6 +149,9 @@ public class PlayerMovement : MonoBehaviour {
                             int index = i + offset;
                             if (m_keyDirections[index] && m_levelManager.m_currentLevel.m_gravityDirection[index].m_allowDirection)
                             {
+                                if((int)m_gravityDirection == index) {
+                                    continue;
+                                }
                                 m_didUseGravityThisPress = true;
                                 FlipGravity((Direction)index);
                                  m_levelManager.m_currentLevel.m_movesDone++;
