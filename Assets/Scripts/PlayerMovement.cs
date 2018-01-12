@@ -324,23 +324,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FlipGravity(Direction a_direction) {
 
-        float gravityValue = Mathf.Max(Mathf.Abs(Physics.gravity.x),Mathf.Max(Mathf.Abs(Physics.gravity.y), Mathf.Abs(Physics.gravity.z)));
-        Vector3 gravity = Vector3.zero;
-        switch (a_direction) {
-            case Direction.KDown:
-                gravity.y = -gravityValue;
-                break;
-            case Direction.KUp:
-                gravity.y = gravityValue;
-                break;
-            case Direction.KLeft:
-                gravity.x = -gravityValue;
-                break;
-            case Direction.KRight:
-                gravity.x = gravityValue;
-                break;
-        }
-        Physics.gravity = gravity;
+        m_levelManager.setGravityDirection(a_direction);
         StartCoroutine(FlipPLayer(m_flipTime, a_direction));
 
     }
