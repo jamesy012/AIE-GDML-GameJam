@@ -16,17 +16,18 @@ public class Level : MonoBehaviour {
    
    
     [Header("Bools")]
-    public bool m_startFlipped;
     public bool m_levelFailed;
     private bool m_levelComplete;
 
-    
+    public PlayerMovement.Direction m_startingDirection = PlayerMovement.Direction.KDown;
+
     public Transform m_respawnPoint;
     [HideInInspector]
     public Transform m_levelCamPos;
     private Door m_door;
     private LevelManager m_levelManager;
-  
+
+    public AudioClip m_doorOpenSFX;
 
     public int m_platinumStarMoves;
     public int m_goldStarMoves;
@@ -65,6 +66,7 @@ public class Level : MonoBehaviour {
     }
 
     public void OpenDoor() {
+        SoundManager.PlaySFX(m_doorOpenSFX);
         m_door.m_animtor.SetTrigger("Open");
     }
 

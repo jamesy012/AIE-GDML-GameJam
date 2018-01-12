@@ -105,15 +105,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         //calc the direction of the gravity
-        if (Physics.gravity.y > 0.5f) {
-        m_gravityDirection = Direction.KUp;
-        } else if (Physics.gravity.y < -0.5f) {
-            m_gravityDirection = Direction.KDown;
-        } else if(Physics.gravity.x > 0.5f) {
-            m_gravityDirection = Direction.KRight;
-        } else if (Physics.gravity.x < -0.5f) {
-            m_gravityDirection = Direction.KLeft;
-        }
+        calcCurrentGravityDirection();
 
         //gravity changer key inputs
         bool keyGravityFlipY = Input.GetKey(KeyCode.Space);
@@ -277,19 +269,46 @@ public class PlayerMovement : MonoBehaviour {
         SideMovement();
     }
 
+    /// <summary>
+    /// simple way to update the current gravity direction
+    /// this changed m_gravityDirection
+    /// </summary>
+    private void calcCurrentGravityDirection() {
+        if (Physics.gravity.y > 0.5f) {
+            m_gravityDirection = Direction.KUp;
+        } else if (Physics.gravity.y < -0.5f) {
+            m_gravityDirection = Direction.KDown;
+        } else if (Physics.gravity.x > 0.5f) {
+            m_gravityDirection = Direction.KRight;
+        } else if (Physics.gravity.x < -0.5f) {
+            m_gravityDirection = Direction.KLeft;
+        }
+    }
+
     public void ResetVariables()
     {
         
         StopAllCoroutines();
         m_moveSpeed = 0;
-        if (m_levelManager.m_currentLevel.m_startFlipped)
-        {
-            Debug.LogError("Unsupported atm");
+
+
+        calcCurrentGravityDirection();
+
+        switch (m_gravityDirection) {
+            case Direction.KLeft:
+                m_graphics.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
+                break;
+            case Direction.KRight:
+                m_graphics.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                break;
+            case Direction.KUp:
+                m_graphics.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
+                break;
+            case Direction.KDown:
+                m_graphics.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                break;
         }
-
-        m_graphics.transform.rotation = Quaternion.identity;
         
-
     }
 
     private void SideMovement() {

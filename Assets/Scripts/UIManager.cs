@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        m_references = GameObject.Find("References").GetComponent<References>();
+        m_references = GameObject.FindObjectOfType<References>();
 	}
 	
 	// Update is called once per frame
@@ -38,31 +38,33 @@ public class UIManager : MonoBehaviour {
 
     public void DisplayStar(Level.StarAwarded a_starAwarded, Level a_level)
     {
-        switch (a_starAwarded)
-        {
-            case Level.StarAwarded.Platinum:
-                Debug.Log("Plat");
-                a_level.m_levelStar.sprite = m_references.m_starSprites[3];
-                a_level.m_levelStar.color = Color.white;
-                break;
+        if (a_level.m_levelStar != null) {
+            switch (a_starAwarded) {
+                case Level.StarAwarded.Platinum:
+                    Debug.Log("Plat");
+                    a_level.m_levelStar.sprite = m_references.m_starSprites[3];
+                    a_level.m_levelStar.color = Color.white;
+                    break;
 
-            case Level.StarAwarded.Gold:
-                Debug.Log("Gold");
-                a_level.m_levelStar.sprite = m_references.m_starSprites[2];
-                a_level.m_levelStar.color = Color.white;
-                break;
+                case Level.StarAwarded.Gold:
+                    Debug.Log("Gold");
+                    a_level.m_levelStar.sprite = m_references.m_starSprites[2];
+                    a_level.m_levelStar.color = Color.white;
+                    break;
 
-            case Level.StarAwarded.Silver:
-                a_level.m_levelStar.sprite = m_references.m_starSprites[1];
-                a_level.m_levelStar.color = Color.white;
-                break;
+                case Level.StarAwarded.Silver:
+                    a_level.m_levelStar.sprite = m_references.m_starSprites[1];
+                    a_level.m_levelStar.color = Color.white;
+                    break;
 
-            case Level.StarAwarded.Bronze:
-                a_level.m_levelStar.sprite = m_references.m_starSprites[0];
-                a_level.m_levelStar.color = Color.white;
-                break;
+                case Level.StarAwarded.Bronze:
+                    a_level.m_levelStar.sprite = m_references.m_starSprites[0];
+                    a_level.m_levelStar.color = Color.white;
+                    break;
+            }
+        } else {
+            Debug.LogError("UIManager::DisplayStar(). a_level.m_levelStar is null");
         }
-     
 
     }
 
