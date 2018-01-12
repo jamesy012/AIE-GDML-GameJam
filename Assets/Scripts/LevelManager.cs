@@ -46,18 +46,23 @@ public class LevelManager : MonoBehaviour {
         if (m_currentLevel.m_movesDone == m_currentLevel.m_platinumStarMoves)
         {
             Debug.Log("Platinum");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Platinum;
+            m_uiManager.DisplayStar("Platinum", m_currentLevel);
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_goldStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_platinumStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_goldStarMoves)
         {
             Debug.Log("Gold");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Gold;
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_silverStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_goldStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_silverStarMoves)
         {
             Debug.Log("Silver");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Silver;
         }
-        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_bronzeStarMoves && m_currentLevel.m_movesDone > m_currentLevel.m_silverStarMoves)
+        else if (m_currentLevel.m_movesDone <= m_currentLevel.m_bronzeStarMoves)
         {
             Debug.Log("Bronze");
+            m_currentLevel.m_starAwarded = Level.StarAwarded.Bronze;
         }
         m_previousLevel = m_currentLevel;
         for(int i = 0; i < m_levels.Count; i++)

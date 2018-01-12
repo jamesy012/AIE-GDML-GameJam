@@ -32,6 +32,16 @@ public class Level : MonoBehaviour {
     public int m_silverStarMoves;
     public int m_bronzeStarMoves;
 
+    public int m_levelNumber;
+
+    public enum StarAwarded
+    {
+        Bronze,
+        Silver,
+        Gold,
+        Platinum
+    }
+    public StarAwarded m_starAwarded;
 
     [System.Serializable]
     public struct GravityDirection {

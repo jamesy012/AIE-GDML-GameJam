@@ -35,6 +35,17 @@ public class UIManager : MonoBehaviour {
 		
     }
 
+
+    public void DisplayStar(string a_star, Level a_level)
+    {
+        switch (a_star)
+        {
+            case " Platinum":
+                break;
+        }
+
+    }
+
     public void SetupKeys(int a_numberOfKeys)
     {
         for(int i = 0; i < m_keyPanel.childCount; i ++)
