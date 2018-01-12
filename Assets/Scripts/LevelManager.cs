@@ -20,17 +20,16 @@ public class LevelManager : MonoBehaviour {
     public Camera m_camera;
     private float m_currentTime;
 
+
+
     // Use this for initialization
     void Start () {
 		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Level"))
         {
             m_levels.Add(obj.GetComponent<Level>());
         }
-        for(int i = 0; i < m_levels.Count; i++)
-        {
-            m_levels[i].m_levelNumber = i;
-        
-        }
+        m_levels.Sort(delegate (Level l1, Level l2) { return l1.m_levelNumber.CompareTo(l2.m_levelNumber); });
+
         m_defaultGravity = Physics.gravity;
         m_player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         m_uiManager = GameObject.FindWithTag("UIManager").GetComponent<UIManager>();

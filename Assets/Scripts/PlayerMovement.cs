@@ -124,36 +124,33 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (!m_levelManager.m_currentLevel.m_levelFailed)
             {
-                //go gravity flip
-                if (keyGravityFlipY | keyGravityFlipX)
-                {
-                    if (!m_didUseGravityThisPress)
-                    {
-                        //0-3(inclusive) being left,right,up,down keys
-                        int offset = 0;
-                        //because up and down are 2/3 in the array
-                        if (keyGravityFlipY)
-                        {
-                            offset = 2;
-                        }
-                        for (int i = 0; i < 2; i++)
-                        {
-                            int index = i + offset;
-                            if (m_keyDirections[index] && m_levelManager.m_currentLevel.m_gravityDirection[index].m_allowDirection)
-                            {
-                                if((int)m_gravityDirection == index) {
-                                    continue;
+                if (m_levelManager.m_currentLevel.m_movesDone < m_levelManager.m_currentLevel.m_movesAvailable) {
+                    //go gravity flip
+                    if (keyGravityFlipY | keyGravityFlipX) {
+                        if (!m_didUseGravityThisPress) {
+                            //0-3(inclusive) being left,right,up,down keys
+                            int offset = 0;
+                            //because up and down are 2/3 in the array
+                            if (keyGravityFlipY) {
+                                offset = 2;
+                            }
+                            for (int i = 0; i < 2; i++) {
+                                int index = i + offset;
+                                if (m_keyDirections[index] && m_levelManager.m_currentLevel.m_gravityDirection[index].m_allowDirection) {
+                                    if ((int)m_gravityDirection == index) {
+                                        continue;
+                                    }
+                                    m_didUseGravityThisPress = true;
+                                    FlipGravity((Direction)index);
+                                    m_levelManager.m_currentLevel.m_movesDone++;
+                                    m_levelManager.m_uiManager.SetupMoves(m_levelManager.m_currentLevel.m_movesAvailable - m_levelManager.m_currentLevel.m_movesDone, m_levelManager.m_currentLevel.m_movesAvailable);
+                                    break;
                                 }
-                                m_didUseGravityThisPress = true;
-                                FlipGravity((Direction)index);
-                                 m_levelManager.m_currentLevel.m_movesDone++;
-                                 m_levelManager.m_uiManager.SetupMoves(m_levelManager.m_currentLevel.m_movesAvailable - m_levelManager.m_currentLevel.m_movesDone, m_levelManager.m_currentLevel.m_movesAvailable);
-                                 break;
-                             }
+                            }
                         }
-                    }
 
-                } 
+                    }
+                }
             }
            
         }

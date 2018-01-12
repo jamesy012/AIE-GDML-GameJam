@@ -11,6 +11,7 @@ public class KeyPickupScript : MonoBehaviour
     private void Start()
     {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
+        keyPickup = Resources.Load<AudioClip>("Key Pickup Sound");
     }
 
     private void OnTriggerEnter(Collider other)

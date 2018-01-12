@@ -57,12 +57,18 @@ public class Level : MonoBehaviour {
 
     private KeyPickupScript[] m_ListOfKeys;
 
+    private void Awake() {
+        m_levelNumber = int.Parse(transform.name.Remove(0, "Level".Length)) - 1;
+    }
+
     // Use this for initialization
     void Start() {
+        m_doorOpenSFX = Resources.Load<AudioClip>("Door Unlock Sound");
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
         m_door = GetComponentInChildren<Door>();
         m_ListOfKeys = GetComponentsInChildren<KeyPickupScript>();
         m_levelStar = GameObject.FindWithTag("ScoreHolder").transform.GetChild(m_levelNumber).GetComponent<Image>();
+
     }
 
     public void OpenDoor() {
