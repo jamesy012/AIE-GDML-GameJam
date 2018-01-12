@@ -87,10 +87,9 @@ public class LevelManager : MonoBehaviour {
         m_currentLevel.m_movesDone = 0;
         m_currentLevel.m_keysCollected = 0;
         m_player.ResetVariables();
-        foreach(KeyPickupScript key in GetComponentsInChildren<KeyPickupScript>())
-        {
-            key.gameObject.SetActive(true);
-        }
+
+        m_currentLevel.ResetKeys();
+
     }
 
     public void AddKey()
