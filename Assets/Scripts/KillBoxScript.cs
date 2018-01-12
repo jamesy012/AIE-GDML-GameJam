@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class KillBoxScript : MonoBehaviour {
 
-    public GameObject playerCollider;
     public AudioClip deathSound;
     public LevelManager m_levelManager;
+    public ParticleSystem playerDeathParticle;
+    Transform playerPosition;
 
     private void Start()
     {
@@ -17,6 +18,11 @@ public class KillBoxScript : MonoBehaviour {
     {
         if (other.CompareTag("Player"))
         {
+            if (playerDeathParticle != null)
+            {
+                playerPosition = GameObject.Find("Player").transform;
+                Instantiate(playerDeathParticle, new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z), playerPosition.transform.rotation);
+            }
             m_levelManager.RestartLevel();
             SoundManager.PlaySFX(deathSound);
         }
