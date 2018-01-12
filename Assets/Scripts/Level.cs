@@ -46,12 +46,15 @@ public class Level : MonoBehaviour {
     void Start()
     {
         m_levelManager = GameObject.FindWithTag("LevelManager").GetComponent<LevelManager>();
-        m_door = m_levelManager.m_currentLevel.GetComponentInChildren<Door>();
+        m_door = GetComponentInChildren<Door>();
     }
-	
-    public void OpenDoor()
-    {
+
+    public void OpenDoor() {
         m_door.m_animtor.SetTrigger("Open");
+    }
+
+    public void CloseDoor() {
+        m_door.m_animtor.SetTrigger("Close");
     }
 
 

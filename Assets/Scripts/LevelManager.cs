@@ -72,10 +72,13 @@ public class LevelManager : MonoBehaviour {
             }
            
         }
+        m_previousLevel.CloseDoor();
     }
 
-    public void RestartLevel()
-    {
+    public void RestartLevel() {
+        if (m_currentLevel.m_keysCollected == m_currentLevel.m_keysInLevel) {
+            m_currentLevel.CloseDoor();
+        }
         m_player.transform.position = m_currentLevel.m_respawnPoint.transform.position;
         Physics.gravity = m_defaultGravity;
         m_uiManager.SetupKeys(m_currentLevel.m_keysInLevel);
