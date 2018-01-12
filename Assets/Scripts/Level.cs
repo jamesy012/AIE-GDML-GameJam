@@ -26,7 +26,8 @@ public class Level : MonoBehaviour {
     public Transform m_levelCamPos;
     private Door m_door;
     private LevelManager m_levelManager;
-  
+
+    public AudioClip m_doorOpenSFX;
 
     public int m_platinumStarMoves;
     public int m_goldStarMoves;
@@ -65,6 +66,7 @@ public class Level : MonoBehaviour {
     }
 
     public void OpenDoor() {
+        SoundManager.PlaySFX(m_doorOpenSFX);
         m_door.m_animtor.SetTrigger("Open");
     }
 
